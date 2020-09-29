@@ -18,6 +18,7 @@ export default function Header({ nav }) {
 		<View style={styles.header}>
 			<FontAwesome name="bars" size={24} color="#D1B653" onPress={() => nav.openDrawer()} />
 			<Image style={styles.img} source={require('../assets/logoBlanco.png')} />
+			<FontAwesome name="shopping-cart" size={24} color="#D1B653" />
 		</View>
 		)
 	}
