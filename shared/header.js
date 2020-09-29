@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
 	img: {
 		width: 150,
 		height: 40
+		
 	},
 	regular: {
 		fontFamily: 'Montserrat_400Regular'

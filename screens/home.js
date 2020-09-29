@@ -26,9 +26,6 @@ export default function Home({ navigation }) {
 		return (
 			<ScrollView>
 		<View style={styles.container}>
-		    <View style={styles.header}>
-				<Text style={styles.bold}>header</Text>
-			</View>
 			<View style={styles.banner}>
 				<ImageBackground source={image} style={styles.banner}></ImageBackground>
 			</View>
@@ -40,6 +37,7 @@ export default function Home({ navigation }) {
 				</View>
 				<Text style={styles.bold}>CATEGORIAS</Text>
 				<FlatList
+				    numColumns={2}
 					data={categories}
 					renderItem={({item}) => (
 						<View style={styles.products}>
@@ -66,14 +64,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#fff',
 	},
-	header:{
-		backgroundColor: "black",
-		height: 80,
-		borderBottomColor: "white",
-		borderBottomWidth: 2,
-		alignItems: "center",
-		justifyContent: "center"
-	},
 	banner:{
 	   height: 200,
 	
@@ -89,11 +79,13 @@ const styles = StyleSheet.create({
 	products:{
 		display: "flex",
 		alignItems: "center",
-		backgroundColor: "red",
-		marginVertical: 20,
-		marginHorizontal: 80,
-		paddingHorizontal: 10,
-		paddingVertical:40
+		justifyContent: "space-between",
+		backgroundColor: "grey",
+		width: 180,
+		marginVertical: 10,
+		marginLeft: 18,
+		paddingHorizontal: 5,
+		paddingVertical:20
 	},
 	home:{
 		backgroundColor: "black",
@@ -104,6 +96,10 @@ const styles = StyleSheet.create({
 	},
 	bold: {
 		fontFamily: 'Montserrat_700Bold',
-		color: "white"
+		color: "white",
+		textAlign: "center"
+	},
+	whoWeAre:{
+		margin: 70,
 	}
 })
