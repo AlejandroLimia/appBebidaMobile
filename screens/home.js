@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, FlatList, ImageBackground, ScrollView, S
 import { AppLoading } from 'expo';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import Header from '../shared/header';
+import { TouchableHighlight } from 'react-native-gesture-handler';
 
 export default function Home({ navigation }) {
 	const image = { uri:  "https://i0.wp.com/www.totalwine.com/media/sys_master/cmsmedia/h18/ha7/8948118093854.jpg" };
@@ -33,30 +34,41 @@ export default function Home({ navigation }) {
 			<View style={styles.banner}>
 				<ImageBackground source={image} style={styles.banner}></ImageBackground>
 			</View>
+			<Image source={require('../assets/decoration.png')}  style={styles.decorationOne} />
+			<Image source={require('../assets/decoration2.png')}  style={styles.decorationTwo} />
 			<View style={styles.home}>
 				<View style={styles.whoWeAre}>
-					<Text style={styles.bold}>QUIENES SOMOS</Text>
-					<Text style={styles.bold}>Somos una empresa que distribuye alcohol de calidad, tenemos las bebidas alcoholicas mas exclusivas para que nuestros clientes disfruten. Buscamos brindar una experiencia y producto de primera calidad.</Text>
-					<Text style={styles.bold}>Si estas buscando bebidas exclusivas para disfrutar aqui vas a poder encontrarlas</Text>
+					<Text style={styles.bolder}>QUIENES SOMOS</Text>
+					<Text style={styles.firstText}>Somos una empresa que distribuye alcohol de calidad, tenemos las bebidas alcoholicas mas exclusivas para que nuestros clientes disfruten. Buscamos brindar una experiencia y producto de primera calidad.</Text>
+					<Text style={styles.secondText}>Si estas buscando bebidas exclusivas para disfrutar aqui vas a poder encontrarlas</Text>
 				</View>
-				<Text style={styles.bold}>CATEGORIAS</Text>
+				<Text style={styles.bolderr}>CATEGORIAS</Text>
 				<FlatList
 				    numColumns={2}
 					data={categories}
 					renderItem={({item}) => {
-						return (<View style={styles.products}>
-							<Image source={item.foto} />
-							<Text style={styles.bold}>{item.nombre}</Text>
-						</View>)
+						return (
+							<TouchableHighlight  
+							activeOpacity={0.2}
+							underlayColor="#000"
+							onPress={() => navigation.navigate('Products')}>
+								<View style={styles.products}>
+									<View style={styles.productsImage}>
+										<Image source={item.foto}  />
+									</View>
+									<Text style={styles.bold}>{item.nombre}</Text>
+								</View>
+						</TouchableHighlight>
+						)
 
 					}}
 				/>
 			</View>
-			<View style={styles.footer}>
-			<Text style={styles.bold}>footer</Text>
-			</View>
 		</View>
 		</ScrollView>
+		<View style={styles.footer}>
+			<Text style={styles.bold}>footer</Text>
+			</View>
 		</>)
 	}
 }
@@ -78,24 +90,46 @@ const styles = StyleSheet.create({
 	   height: 200,
 	
 	},
+	decorationOne:{
+		position: "absolute",
+		zIndex: 1,
+		width:130,
+		height:290,
+		top: 60,
+	},
+	decorationTwo:{
+		position: "absolute",
+		zIndex: 1,
+		width:130,
+		height:280,
+		right:0,
+		top: 300,
+	},
 	footer:{
 		backgroundColor: "black",
-		height: 80,
+		height: 60,
 		alignItems: "center",
 		justifyContent: "center",
 		borderTopColor: "white",
-		borderTopWidth: 2,
+		borderTopWidth: 1,
 	},
 	products:{
 		display: "flex",
 		alignItems: "center",
 		justifyContent: "space-between",
-		backgroundColor: "grey",
-		width: 180,
 		marginVertical: 10,
 		marginLeft: 18,
+	},
+	productsImage:{
+		backgroundColor:"#383838",
+		width: 180,
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "space-between",
 		paddingHorizontal: 5,
-		paddingVertical:20
+		paddingVertical:20,
+		marginVertical: 20,
+		borderRadius: 20
 	},
 	home:{
 		backgroundColor: "black",
@@ -109,7 +143,41 @@ const styles = StyleSheet.create({
 		color: "white",
 		textAlign: "center"
 	},
+	bolder:{
+		fontFamily: 'Montserrat_700Bold',
+		color: "white",
+		textAlign: "center",
+		fontSize: 20,
+		marginBottom: 20,
+		marginLeft: -29,
+	},
+	bolderr:{
+		fontFamily: 'Montserrat_700Bold',
+		color: "white",
+		textAlign: "center",
+		fontSize: 20,
+		marginBottom: 20,
+	
+	},
 	whoWeAre:{
-		margin: 70,
-	}
+		margin: 80,
+		marginBottom: 120
+	},
+	firstText:{
+		fontFamily: 'Montserrat_400Regular',
+		color: "white",
+		textAlign: "center",
+		width:280,
+		marginLeft: -25,
+		fontSize: 11
+	},
+	secondText:{
+		fontFamily: 'Montserrat_700Bold',
+		color: "white",
+		textAlign: "center",
+		width:280,
+		marginLeft: -27,
+		marginVertical:20,
+		fontSize: 13
+	},
 })

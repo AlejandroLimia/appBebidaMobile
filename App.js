@@ -7,6 +7,8 @@ import Home from './screens/home';
 import Products from './screens/products';
 import Cart from './screens/cart';
 import Header from './shared/header';
+import LogIn from './screens/logIn'
+import Register from './screens/register'
 
 const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator();
@@ -17,6 +19,8 @@ function DrawerComp() {
 			drawerBackgroundColor="black" >
 		  <Drawer.Screen name="Home" component={Home} />
 		  <Drawer.Screen name="Cart" component={Cart} />
+		  <Drawer.Screen name="LogIn" component={LogIn} />
+		  <Drawer.Screen name="Register" component={Register} />
 		</Drawer.Navigator>
 	);
   }
