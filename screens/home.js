@@ -1,25 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, FlatList, ImageBackground, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, ImageBackground, ScrollView, StatusBar } from 'react-native';
 import { AppLoading } from 'expo';
-import { useFonts, Montserrat_400Regular, Montserrat_700Bold, Montserrat_900Black } from '@expo-google-fonts/montserrat';
+import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import Header from '../shared/header';
 
 export default function Home({ navigation }) {
 	const image = { uri:  "https://i0.wp.com/www.totalwine.com/media/sys_master/cmsmedia/h18/ha7/8948118093854.jpg" };
 	const categories = [
-		{nombre: "Vino", foto: "vino"}, 
-		{nombre: "Champagne", foto: "champagne"},
-		{nombre: "Cerveza", foto: "cerveza"}, 
-		{nombre: "Whisky y Espirituosas", foto: "whiskyespirituosas"},
-		{nombre: "Sin Alcohol", foto: "sinalcohol"}, 
-		{nombre: "Promociones", foto: "promociones"}]
+		{nombre: "Vino", foto: require('../assets/vino.png')}, 
+		{nombre: "Champagne", foto: require('../assets/champagne.png')},
+		{nombre: "Cerveza", foto: require('../assets/cerveza.png')}, 
+		{nombre: "Whisky y Espirituosas", foto: require('../assets/whiskyespirituosas.png')},
+		{nombre: "Sin Alcohol", foto: require('../assets/sinalcohol.png')}, 
+		{nombre: "Promociones", foto: require('../assets/promociones.png')}]
 
 	let [fontsLoaded] = useFonts({
 	  Montserrat_400Regular,
 	  Montserrat_700Bold,
 	});
 
+	
     if (!fontsLoaded) {
 		return <AppLoading />;
 	} 
@@ -43,17 +43,15 @@ export default function Home({ navigation }) {
 				<FlatList
 				    numColumns={2}
 					data={categories}
-					renderItem={({item}) => (
-						<View style={styles.products}>
-							<Image source={require("../images/sinalcohol.png")} />
+					renderItem={({item}) => {
+						return (<View style={styles.products}>
+							<Image source={item.foto} />
 							<Text style={styles.bold}>{item.nombre}</Text>
-						</View>
+						</View>)
 
-					)}
+					}}
 				/>
 			</View>
-					{/*<Image source={require("../images/" + category.foto + ".png")} />
-					<Image source={require(`../images/${category.foto}.png`)} />*/}
 			<View style={styles.footer}>
 			<Text style={styles.bold}>footer</Text>
 			</View>
