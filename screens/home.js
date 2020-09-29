@@ -41,6 +41,7 @@ export default function Home({ navigation }) {
 				</View>
 				<Text style={styles.bold}>CATEGORIAS</Text>
 				<FlatList
+				    numColumns={2}
 					data={categories}
 					renderItem={({item}) => (
 						<View style={styles.products}>
@@ -90,11 +91,13 @@ const styles = StyleSheet.create({
 	products:{
 		display: "flex",
 		alignItems: "center",
-		backgroundColor: "red",
-		marginVertical: 20,
-		marginHorizontal: 80,
-		paddingHorizontal: 10,
-		paddingVertical:40
+		justifyContent: "space-between",
+		backgroundColor: "grey",
+		width: 180,
+		marginVertical: 10,
+		marginLeft: 18,
+		paddingHorizontal: 5,
+		paddingVertical:20
 	},
 	home:{
 		backgroundColor: "black",
@@ -105,6 +108,10 @@ const styles = StyleSheet.create({
 	},
 	bold: {
 		fontFamily: 'Montserrat_700Bold',
-		color: "white"
+		color: "white",
+		textAlign: "center"
+	},
+	whoWeAre:{
+		margin: 70,
 	}
 })
