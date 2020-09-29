@@ -1,10 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import { AppLoading } from 'expo';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 
-export default function App() {
+export default function Home({ navigation }) {
 	let [fontsLoaded] = useFonts({
 	  Montserrat_400Regular,
 	  Montserrat_700Bold,
@@ -17,6 +17,14 @@ export default function App() {
 		return (
 		<View style={styles.container}>
 			<Text style={styles.bold}>Home</Text>
+			<Button
+				title="Products"
+				onPress={() => navigation.navigate('Products')}
+			/>
+			<Button
+				title="Menu Lateral"
+				onPress={() => navigation.openDrawer()}
+			/>
 			<StatusBar style="auto" />
 		</View>
 		)
