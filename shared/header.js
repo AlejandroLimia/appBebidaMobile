@@ -30,12 +30,14 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'space-between',
 		marginHorizontal: 0,
-		padding: 0,
-		borderWidth: 0
+		paddingHorizontal: 20,
+		borderWidth: 0,
+		height: 60,
+		width: '100%'
 	},
 	img: {
 		width: 150,
-		height: 40
+		height: 45
 	},
 	regular: {
 		fontFamily: 'Montserrat_400Regular'

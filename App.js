@@ -1,6 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -14,7 +13,8 @@ const Drawer = createDrawerNavigator();
 
 function DrawerComp() {
 	return (
-		<Drawer.Navigator initialRouteName="Home">
+		<Drawer.Navigator initialRouteName="Home" 
+			drawerBackgroundColor="black" >
 		  <Drawer.Screen name="Home" component={Home} />
 		  <Drawer.Screen name="Cart" component={Cart} />
 		</Drawer.Navigator>
@@ -22,11 +22,13 @@ function DrawerComp() {
   }
 
 export default function App() {
-  return (
+  return (<>
+	<StatusBar barStyle="light-content" />
     <NavigationContainer>
 		<Stack.Navigator initialRouteName="Home" >
 			<Stack.Screen name="Home" component={DrawerComp} 
-			options={
+			options={{ headerShown: false }}>
+			{/* options={
 					({ navigation }) => {
 						return({
 						headerTitle: (navigation) => <Header nav={navigation} />,
@@ -34,13 +36,13 @@ export default function App() {
 							backgroundColor: 'black'
 						}
 					})}
-			}>
+			}> */}
 			</Stack.Screen>
 			{/* <Stack.Screen name="Home" component={Home} /> */}
 			<Stack.Screen name="Products" component={Products} options={{title: 'Prods'}}/>
 		</Stack.Navigator>
 	</NavigationContainer>
-  );
+  </>);
 }
 
 const styles = StyleSheet.create({

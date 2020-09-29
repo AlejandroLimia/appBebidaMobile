@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, FlatList, ImageBackground, ScrollView } from 'react-native';
 import { AppLoading } from 'expo';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold, Montserrat_900Black } from '@expo-google-fonts/montserrat';
+import Header from '../shared/header';
 
 export default function Home({ navigation }) {
 	const image = { uri:  "https://i0.wp.com/www.totalwine.com/media/sys_master/cmsmedia/h18/ha7/8948118093854.jpg" };
@@ -23,12 +24,12 @@ export default function Home({ navigation }) {
 		return <AppLoading />;
 	} 
 	else {
-		return (
-			<ScrollView>
-		<View style={styles.container}>
-		    <View style={styles.header}>
-				<Text style={styles.bold}>header</Text>
-			</View>
+		return (<>
+		<View style={styles.header}>
+			<Header nav={navigation} />
+		</View>
+		<ScrollView>
+			<View style={styles.container}>
 			<View style={styles.banner}>
 				<ImageBackground source={image} style={styles.banner}></ImageBackground>
 			</View>
@@ -57,7 +58,7 @@ export default function Home({ navigation }) {
 			</View>
 		</View>
 		</ScrollView>
-		)
+		</>)
 	}
 }
 
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "black",
 		height: 80,
 		borderBottomColor: "white",
-		borderBottomWidth: 2,
+		borderBottomWidth: 1,
 		alignItems: "center",
 		justifyContent: "center"
 	},
