@@ -146,7 +146,7 @@ export default function LogIn({ navigation }) {
 				
 				<TextInput
 					style={styles.inputs}
-					secureTextEntry= "true"
+					// secureTextEntry= "true"
 					placeholder="Escribe tu contraseña aca"
 					placeholderTextColor="#ffffffa9"
 					onChangeText={(val)=> setPass(val)}
