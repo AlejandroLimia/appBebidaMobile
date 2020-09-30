@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, FlatList, ImageBackground, ScrollView, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, ImageBackground, ScrollView, StatusBar, Button } from 'react-native';
 import { AppLoading } from 'expo';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import Header from '../shared/header';
 import { TouchableHighlight } from 'react-native-gesture-handler';
+import Footer from '../shared/footer';
 
 export default function Home({ navigation }) {
-	const image = { uri:  "https://i0.wp.com/www.totalwine.com/media/sys_master/cmsmedia/h18/ha7/8948118093854.jpg" };
+	const image = require('../assets/background.jpg');
 	const categories = [
 		{nombre: "Vino", foto: require('../assets/vino.png')}, 
 		{nombre: "Champagne", foto: require('../assets/champagne.png')},
@@ -66,9 +67,9 @@ export default function Home({ navigation }) {
 			</View>
 		</View>
 		</ScrollView>
-		<View style={styles.footer}>
-			<Text style={styles.bold}>footer</Text>
-			</View>
+		<View >
+		 <Footer nav={navigation}/>
+		</View>
 		</>)
 	}
 }
@@ -79,9 +80,9 @@ const styles = StyleSheet.create({
 		backgroundColor: '#fff',
 	},
 	header:{
-		backgroundColor: "black",
+		backgroundColor: "#191919",
 		height: 80,
-		borderBottomColor: "white",
+		borderBottomColor: "#353535",
 		borderBottomWidth: 1,
 		alignItems: "center",
 		justifyContent: "center"
@@ -104,14 +105,6 @@ const styles = StyleSheet.create({
 		height:280,
 		right:0,
 		top: 300,
-	},
-	footer:{
-		backgroundColor: "black",
-		height: 60,
-		alignItems: "center",
-		justifyContent: "center",
-		borderTopColor: "white",
-		borderTopWidth: 1,
 	},
 	products:{
 		display: "flex",

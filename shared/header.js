@@ -18,6 +18,7 @@ export default function Header({ nav }) {
 		<View style={styles.header}>
 			<FontAwesome name="bars" size={24} color="#D1B653" onPress={() => nav.openDrawer()} />
 			<Image style={styles.img} source={require('../assets/logoBlanco.png')} />
+			<FontAwesome name="shopping-cart" size={24} color="#D1B653" />
 		</View>
 		)
 	}
@@ -26,7 +27,7 @@ export default function Header({ nav }) {
 const styles = StyleSheet.create({
 	header: {
 		flexDirection: 'row',
-		backgroundColor: '#000',
+		backgroundColor: "#191919",
 		alignItems: 'center',
 		justifyContent: 'space-between',
 		marginHorizontal: 0,
