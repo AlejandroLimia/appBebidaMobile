@@ -8,12 +8,12 @@ import { TouchableHighlight } from 'react-native-gesture-handler';
 export default function Home({ navigation }) {
 	const image = { uri:  "https://i0.wp.com/www.totalwine.com/media/sys_master/cmsmedia/h18/ha7/8948118093854.jpg" };
 	const categories = [
-		{nombre: "Vino", foto: require('../assets/vino.png')}, 
-		{nombre: "Champagne", foto: require('../assets/champagne.png')},
-		{nombre: "Cerveza", foto: require('../assets/cerveza.png')}, 
-		{nombre: "Whisky y Espirituosas", foto: require('../assets/whiskyespirituosas.png')},
-		{nombre: "Sin Alcohol", foto: require('../assets/sinalcohol.png')}, 
-		{nombre: "Promociones", foto: require('../assets/promociones.png')}]
+		{nombre: "Vino", foto: require('../assets/vino.png'), url: "vino"}, 
+		{nombre: "Champagne", foto: require('../assets/champagne.png'), url: "champagne"},
+		{nombre: "Cerveza", foto: require('../assets/cerveza.png'), url: "cerveza"}, 
+		{nombre: "Whisky y Espirituosas", foto: require('../assets/whiskyespirituosas.png'), url: "whiskyespirituosas"},
+		{nombre: "Sin Alcohol", foto: require('../assets/sinalcohol.png'), url: "sinalcohol"}, 
+		{nombre: "Promociones", foto: require('../assets/promociones.png'), url: "promociones"}]
 
 	let [fontsLoaded] = useFonts({
 	  Montserrat_400Regular,
@@ -51,7 +51,8 @@ export default function Home({ navigation }) {
 							<TouchableHighlight  
 							activeOpacity={0.2}
 							underlayColor="#000"
-							onPress={() => navigation.navigate('Products')}>
+							style={{display: 'flex', alignItems: 'center'}}
+							onPress={() => navigation.navigate('Products', { title: item.nombre, url: item.url })}>
 								<View style={styles.products}>
 									<View style={styles.productsImage}>
 										<Image source={item.foto}  />
@@ -118,11 +119,11 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "space-between",
 		marginVertical: 10,
-		marginLeft: 18,
+		marginHorizontal: 9,
 	},
 	productsImage:{
 		backgroundColor:"#383838",
-		width: 180,
+		width: 160,
 		display: "flex",
 		alignItems: "center",
 		justifyContent: "space-between",

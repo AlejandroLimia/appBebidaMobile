@@ -21,6 +21,7 @@ function DrawerComp() {
 		  <Drawer.Screen name="Cart" component={Cart} />
 		  <Drawer.Screen name="LogIn" component={LogIn} />
 		  <Drawer.Screen name="Register" component={Register} />
+		  <Drawer.Screen name="Products" component={Products} />
 		</Drawer.Navigator>
 	);
   }
@@ -32,18 +33,7 @@ export default function App() {
 		<Stack.Navigator initialRouteName="Home" >
 			<Stack.Screen name="Home" component={DrawerComp} 
 			options={{ headerShown: false }}>
-			{/* options={
-					({ navigation }) => {
-						return({
-						headerTitle: (navigation) => <Header nav={navigation} />,
-						headerStyle: {
-							backgroundColor: 'black'
-						}
-					})}
-			}> */}
 			</Stack.Screen>
-			{/* <Stack.Screen name="Home" component={Home} /> */}
-			<Stack.Screen name="Products" component={Products} options={{title: 'Prods'}}/>
 		</Stack.Navigator>
 	</NavigationContainer>
   </>);

@@ -19,7 +19,7 @@ export default function Cart({ navigation }) {
 			<Text style={styles.bold}>Cart</Text>
 			<Button
 				title="Products"
-				onPress={() => navigation.navigate('Products')}
+				onPress={() => navigation.navigate('Products', { title: 'test', url: 'vino' })}
 			/>
 			<Button
 				title="Menu Lateral"
