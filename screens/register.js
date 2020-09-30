@@ -3,8 +3,9 @@ import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { AppLoading } from 'expo';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
+import Header from '../shared/header';
 
-export default function Register({ navigation }) {
+export default function LogIn({ navigation }) {
 	let [fontsLoaded] = useFonts({
 	  Montserrat_400Regular,
 	  Montserrat_700Bold,
@@ -15,11 +16,15 @@ export default function Register({ navigation }) {
 	} 
 	else {
 		return (
+            <>
+                <View style={styles.header}>
+                    <Header nav={navigation} />
+                </View>
 		<View style={styles.container}>
-			<Text style={styles.bold}>Cart</Text>
+			<Text style={styles.bold}>register</Text>
 			<Button
-				title="Products"
-				onPress={() => navigation.navigate('Products')}
+				title="ya tengo una cuenta"
+				onPress={() => navigation.navigate('LogIn')}
 			/>
 			<Button
 				title="Menu Lateral"
@@ -27,6 +32,7 @@ export default function Register({ navigation }) {
 			/>
 			<StatusBar style="auto" />
 		</View>
+        </>
 		)
 	}
 }
@@ -34,14 +40,16 @@ export default function Register({ navigation }) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
+		backgroundColor: '#000',
+        alignItems: 'center',
+        
 		justifyContent: 'center',
 	},
 	regular: {
 		fontFamily: 'Montserrat_400Regular'
 	},
 	bold: {
-		fontFamily: 'Montserrat_700Bold'
+        fontFamily: 'Montserrat_700Bold',
+        color: '#fff',
 	}
 })

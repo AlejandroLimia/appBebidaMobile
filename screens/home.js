@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "space-between",
 		marginVertical: 10,
-		marginLeft: 18,
+		marginHorizontal: 13,
 	},
 	productsImage:{
 		backgroundColor:"#383838",
