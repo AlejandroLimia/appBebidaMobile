@@ -20,8 +20,8 @@ function DrawerComp() {
 		  <Drawer.Screen name="Home" component={Home} />
 		  <Drawer.Screen name="Cart" component={Cart} />
 		  <Drawer.Screen name="LogIn" component={LogIn} />
-		  <Drawer.Screen name="Register" component={Register} />
 		  <Drawer.Screen name="Products" component={Products} />
+		  <Drawer.Screen name="Registrarse" component={Register} />
 		</Drawer.Navigator>
 	);
   }

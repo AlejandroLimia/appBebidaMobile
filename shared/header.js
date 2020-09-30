@@ -27,7 +27,7 @@ export default function Header({ nav }) {
 const styles = StyleSheet.create({
 	header: {
 		flexDirection: 'row',
-		backgroundColor: '#000',
+		backgroundColor: "#191919",
 		alignItems: 'center',
 		justifyContent: 'space-between',
 		marginHorizontal: 0,

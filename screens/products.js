@@ -5,6 +5,7 @@ import { AppLoading } from 'expo';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import ProductCard from '../shared/productCard';
 import Header from '../shared/header';
+import Footer from '../shared/footer';
 
 export default function Products({navigation, route}) {
 	let [fontsLoaded] = useFonts({
@@ -44,6 +45,7 @@ export default function Products({navigation, route}) {
 			</View>
 		</ScrollView>
 		</View>
+		<Footer nav={navigation} />
 		</>)
 	}
 }
