@@ -5,6 +5,7 @@ import { AppLoading } from 'expo';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import Header from '../shared/header';
 import Footer from '../shared/footer';
+import axios from "axios"
 
 
 
@@ -25,9 +26,9 @@ export default function LogIn({ navigation }) {
         pass1: false,
         pass2: false,
     })
+    const ngrok = 'https://748ce9ba62fd.ngrok.io'
     
-    
-    const sendInfo = async => {
+    const sendInfo = async() => {
 		const uname = RegExp(/^[a-zA-Z0-9._]+$/)
 		const reMail = RegExp(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)
 		const rePass = RegExp(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*[!{}[\]@#$%\^&*)(+=._-]).{5,}/)
@@ -93,11 +94,27 @@ export default function LogIn({ navigation }) {
             })
 
         } else {
-		   {/* await props.newUser(user)*/}
-            alert("Gracias por ingresar")
-			
-        }
+			const user = {
+				firstName:name,
+                lastName:surname,
+                mail:mail,
+                pass:pass
+            }
 
+			const response = await axios.post(`${ngrok}/api/user/register`, user)
+			if (response.data.success === "false") {
+				let errors = response.data.error.errors;
+				if (errors.username !== undefined) alert(errors.username.message);
+				if (errors.mail !== undefined) alert(errors.mail.message);
+				return;
+			}
+			else {
+			alert("Gracias por ingresar")
+			navigation.push('Home')
+			}
+		}
+		
+			
     }
 
 
