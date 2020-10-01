@@ -27,6 +27,7 @@ export default function Home({ navigation }) {
 	} 
 	else {
 		return (<>
+		<StatusBar barStyle="light-content" />
 		<View style={styles.header}>
 			<Header nav={navigation} />
 		</View>
@@ -69,7 +70,7 @@ export default function Home({ navigation }) {
 		</View>
 		</ScrollView>
 		<View >
-		 <Footer nav={navigation}/>
+			<Footer nav={navigation}/>
 		</View>
 		</>)
 	}

@@ -6,6 +6,7 @@ import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-googl
 import ProductCard from '../shared/productCard';
 import Header from '../shared/header';
 import Footer from '../shared/footer';
+import { RUTA_API } from '../shared/constants';
 
 export default function Products({navigation, route}) {
 	let [fontsLoaded] = useFonts({
@@ -13,10 +14,9 @@ export default function Products({navigation, route}) {
 	  Montserrat_700Bold,
 	});
 	const [info, setInfo] = useState([])
-	const ngrok = 'https://748ce9ba62fd.ngrok.io'
 
 	useEffect(() => {
-		fetch(`${ngrok}/api/products/${route.params.url}`)
+		fetch(`${RUTA_API}/api/products/${route.params.url}`)
 		.then(response => response.json())
 		.then(json => setInfo(json.listProducts))
 		.catch(err => console.log('falle al comunicarme'))
@@ -38,7 +38,7 @@ export default function Products({navigation, route}) {
 					style={{width: '90%'}}
 					data={info}
 					renderItem={({item}) => { 
-						return <ProductCard data={item} ngrok={ngrok} />
+						return <ProductCard data={item} ngrok={RUTA_API} />
 					}}
 				/>
 				<StatusBar style="auto" />
@@ -65,9 +65,9 @@ const styles = StyleSheet.create({
 		fontFamily: 'Montserrat_700Bold'
 	},
 	header:{
-		backgroundColor: "black",
+		backgroundColor: "#191919",
 		height: 80,
-		borderBottomColor: "white",
+		borderBottomColor: "#353535",
 		borderBottomWidth: 1,
 		alignItems: "center",
 		justifyContent: "center"

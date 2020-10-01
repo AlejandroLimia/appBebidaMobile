@@ -3,16 +3,32 @@ import React, {useState} from 'react';
 import { Button, StyleSheet, Text, View, TextInput, ImageBackground } from 'react-native';
 import { AppLoading } from 'expo';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
+import AsyncStorage from '@react-native-community/async-storage';
 import Header from '../shared/header';
 import Footer from '../shared/footer';
+import axios from 'axios';
+import { RUTA_API } from '../shared/constants';
 
 
 export default function LogIn({ navigation }) {
 	const image = require('../assets/background2.jpg');
 	const [mail, setMail] = useState("")
 	const [pass, setPass] = useState("")
-	const sendInfo = async => {
-		alert("bienvenido")
+	const sendInfo = async () => {
+		const response = await axios.post(`${RUTA_API}/api/user/login`, {mail, pass})
+		if(response.data.success) {
+			try {
+				await AsyncStorage.setItem('token', response.data.token)
+			} 
+			catch (e) {
+				console.log(e)
+			}
+			alert(`Buenas ${response.data.firstName}`)
+			navigation.navigate("Home")
+		}
+		else {
+			alert('salio mal')
+		}
 	}
 
 	let [fontsLoaded] = useFonts({
@@ -39,22 +55,18 @@ export default function LogIn({ navigation }) {
 				onChangeText={(val) => setMail(val)}
 				/>
 				<TextInput
-				secureTextEntry= "true"
+				//secureTextEntry= "true"
 				style={styles.inputs}
 				onChangeText={(val)=> setPass(val)}
 				placeholder="escribe tu contraseña"
 				placeholderTextColor="#9e9e9e"  
 				/>
-			    <Button
-					color="#fff"
-					title="ingresar"
-					onPress={sendInfo}
-				/>
-				<Button
-				    color="#fff"
-					title="Crear cuenta "
-					onPress={() => navigation.navigate('Registrarse')}
-				/>
+				<View style={styles.btnPrimary}>
+					<Text onPress={sendInfo}>Ingresar</Text>
+				</View>
+				<View style={styles.btnSecondary}>
+					<Text style={{color: '#fff'}} onPress={() => navigation.navigate('Registrarse')}>Crear cuenta</Text>
+				</View>
 			</View>
 		</View>
 		</ImageBackground>
@@ -90,7 +102,6 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		marginBottom: 10
 	},
-	
 	banner:{
 		flex: 1,
 	 
@@ -112,5 +123,19 @@ const styles = StyleSheet.create({
 		borderRadius: 8,
 		padding: 10,
 	},
-	
+	btnPrimary: {
+		backgroundColor: '#D1B653',
+		padding: 10,
+		minWidth: 100,
+		alignItems: "center",
+		marginBottom: 10
+	},
+	btnSecondary: {
+		backgroundColor: 'transparent',
+		padding: 10,
+		minWidth: 100,
+		alignItems: "center",
+		borderWidth: 1,
+		borderColor: '#D1B653',
+	},
 })
