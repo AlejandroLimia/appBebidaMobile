@@ -1,0 +1,1 @@
+export const RUTA_API = 'https://3b1d48445c2b.ngrok.io' // HASTA 1/10/2020 20hs

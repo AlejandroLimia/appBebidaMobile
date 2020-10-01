@@ -3,18 +3,20 @@ import React, {useState} from 'react';
 import { Button, StyleSheet, Text, View, ImageBackground, TextInput } from 'react-native';
 import { AppLoading } from 'expo';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
+import AsyncStorage from '@react-native-community/async-storage';
 import Header from '../shared/header';
 import Footer from '../shared/footer';
 import axios from "axios"
+import { RUTA_API } from '../shared/constants';
 
 
 
 export default function LogIn({ navigation }) {
 	const image = require('../assets/background2.jpg');
-	const [name, setName] = React.useState("")
-    const [surname, setSurname] = React.useState("")
-    const [mail, setMail] = React.useState("")
-    const [pass, setPass] = React.useState("")
+	const [name, setName] = useState("")
+    const [surname, setSurname] = useState("")
+    const [mail, setMail] = useState("")
+    const [pass, setPass] = useState("")
 
     const [mensajes, setMensajes] = useState({
         firstName1: false,
@@ -26,7 +28,6 @@ export default function LogIn({ navigation }) {
         pass1: false,
         pass2: false,
     })
-    const ngrok = 'https://748ce9ba62fd.ngrok.io'
     
     const sendInfo = async() => {
 		const uname = RegExp(/^[a-zA-Z0-9._]+$/)
@@ -101,20 +102,25 @@ export default function LogIn({ navigation }) {
                 pass:pass
             }
 
-			const response = await axios.post(`${ngrok}/api/user/register`, user)
-			if (response.data.success === "false") {
+			const response = await axios.post(`${RUTA_API}/api/user/register`, user)
+			if (response.data.success ==="false") {
 				let errors = response.data.error.errors;
 				if (errors.username !== undefined) alert(errors.username.message);
 				if (errors.mail !== undefined) alert(errors.mail.message);
 				return;
 			}
 			else {
-			alert("Gracias por ingresar")
-			navigation.push('Home')
+				try {
+					await AsyncStorage.setItem('token', response.data.token)
+				} 
+				catch (e) {
+					console.log(e)
+				}
+				alert(`Buenas ${response.data.firstName}`)
+				navigation.navigate('Home')
 			}
 		}
 		
-			
     }
 
 
@@ -169,16 +175,12 @@ export default function LogIn({ navigation }) {
 					onChangeText={(val)=> setPass(val)}
 				/> 
 				{mensajes.pass1 ? <Text style={styles.mensajeError}>*Tu contraseña debe contener al menos 5 caracteres</Text> : mensajes.pass2 ?  <Text style={styles.mensajeError}>*Tu contraseña debe contener al menos una letra mayuscula, una minuscula y un numero </Text> : <Text></Text>}
-                 <Button
-					color="#fff"
-					title="ingresar"
-					onPress={sendInfo}
-				/>
-				<Button
-				    color="#fff"
-					title="Ya tengo una cuenta "
-					onPress={() => navigation.navigate('LogIn')}
-				/> 
+                <View style={styles.btnPrimary}>
+					<Text onPress={sendInfo}>Crear cuenta</Text>
+				</View>
+				<View style={styles.btnSecondary}>
+					<Text style={{color: '#fff'}} onPress={() => navigation.navigate('LogIn')}>Ya tengo cuenta</Text>
+				</View>
 			</View>
 		</View>
 		</ImageBackground>
@@ -243,6 +245,21 @@ const styles = StyleSheet.create({
 		textAlign:"center",
 		marginBottom:10,
  
-	}
+	},
+	btnPrimary: {
+		backgroundColor: '#D1B653',
+		padding: 10,
+		minWidth: 100,
+		alignItems: "center",
+		marginBottom: 10
+	},
+	btnSecondary: {
+		backgroundColor: 'transparent',
+		padding: 10,
+		minWidth: 100,
+		alignItems: "center",
+		borderWidth: 1,
+		borderColor: '#D1B653',
+	},
 	
 })
