@@ -12,6 +12,7 @@ import LogIn from './screens/logIn'
 import Register from './screens/register'
 import { FontAwesome } from '@expo/vector-icons';
 import Logout from './shared/logout';
+import ProductsFull from './screens/productsFull';
 
 const HomeStack = createStackNavigator()
 const ProductsStack = createStackNavigator()

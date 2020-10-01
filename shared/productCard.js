@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Button, Image, StyleSheet, Text, View } from 'react-native';
+import { Button, Image, StyleSheet, Text, View,TouchableHighlight } from 'react-native';
 import { AppLoading } from 'expo';
 import { FontAwesome } from '@expo/vector-icons';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 
-export default function ProductCard({data, ngrok}) {
+export default function ProductCard({  data, ngrok}) {
 	let [fontsLoaded] = useFonts({
 	  Montserrat_400Regular,
 	  Montserrat_700Bold,

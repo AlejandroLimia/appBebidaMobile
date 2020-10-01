@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
 	btnPrimary: {
 		backgroundColor: '#D1B653',
 		padding: 10,
-		minWidth: 100,
+		minWidth: 105,
 		alignItems: "center",
 		marginBottom: 10
 	},

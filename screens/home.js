@@ -113,11 +113,11 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "space-between",
 		marginVertical: 10,
-		marginHorizontal: 13,
+		marginHorizontal: 14,
 	},
 	productsImage:{
 		backgroundColor:"#383838",
-		width: 160,
+		width: 175,
 		display: "flex",
 		alignItems: "center",
 		justifyContent: "space-between",
