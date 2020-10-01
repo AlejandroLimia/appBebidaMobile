@@ -8,7 +8,7 @@ import Header from '../shared/header';
 import Footer from '../shared/footer';
 import { RUTA_API } from '../shared/constants';
 
-export default function Products({navigation, route}) {
+export default function Product({navigation, route}) {
 	let [fontsLoaded] = useFonts({
 	  Montserrat_400Regular,
 	  Montserrat_700Bold,
@@ -16,10 +16,10 @@ export default function Products({navigation, route}) {
 	const [info, setInfo] = useState([])
 
 	useEffect(() => {
-		fetch(`${RUTA_API}/api/products/${route.params.url}`)
-		.then(response => response.json())
-		.then(json => setInfo(json.listProducts))
-		.catch(err => console.log('falle al comunicarme'))
+		// fetch(`${RUTA_API}/api/products/${route.params.url}`)
+		// .then(response => response.json())
+		// .then(json => setInfo(json.listProducts))
+		// .catch(err => console.log('falle al comunicarme'))
 	}, [])
 
     if (!fontsLoaded) {
@@ -32,17 +32,7 @@ export default function Products({navigation, route}) {
 		</View>
 		<View style={styles.container}>
 		<ScrollView>
-			<View style={styles.container}>
-				<Text style={{...styles.bold, color: 'white', fontSize: 20, marginVertical: 15}}>{route.params.title}</Text>
-				<FlatList
-					style={{width: '90%'}}
-					data={info}
-					renderItem={({item}) => { 
-						return <ProductCard data={item} ngrok={RUTA_API} navigation={navigation} />
-					}}
-				/>
-				<StatusBar style="auto" />
-			</View>
+			<Text style={{color: "white"}}>{route.params.id}</Text>
 		</ScrollView>
 		</View>
 		<Footer nav={navigation} />

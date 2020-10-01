@@ -5,7 +5,7 @@ import { AppLoading } from 'expo';
 import { FontAwesome } from '@expo/vector-icons';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 
-export default function ProductCard({data, ngrok}) {
+export default function ProductCard({data, ngrok, navigation}) {
 	let [fontsLoaded] = useFonts({
 	  Montserrat_400Regular,
 	  Montserrat_700Bold,
@@ -16,13 +16,13 @@ export default function ProductCard({data, ngrok}) {
 	else {
 		return (
 		<View style={styles.card}>
-			<View style={styles.cardImg}>
+			<View style={styles.cardImg} onPress={() => navigation.navigate('Product', {id: data._id})}>
 				<Image style={styles.img} source={{uri: `${ngrok}/${data._id}.jpg`}} />
 			</View>
 			<View style={styles.cardText}>
-				<Text style={{...styles.cardText, fontSize: 18, fontWeight: 'bold' }}>{data.title}</Text>
+				<Text style={{...styles.cardText, fontSize: 18, fontWeight: 'bold' }} onPress={() => navigation.navigate('Product', {id: data._id})}>{data.title}</Text>
 				<View style={styles.cardTextCart}>
-					<Text style={{...styles.cardText, fontSize: 15, fontWeight: 'bold' }}>${data.price}</Text>
+					<Text style={{...styles.cardText, fontSize: 15, fontWeight: 'bold' }} onPress={() => navigation.navigate('Product', {id: data._id})}>${data.price}</Text>
 					<FontAwesome name="cart-plus" size={40} color="#D1B653" />
 				</View>
 			</View>

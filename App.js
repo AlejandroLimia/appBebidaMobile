@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View, StatusBar, Button } from 'react-native';
-import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Home from './screens/home';
 import Products from './screens/products';
+import Product from './screens/product';
 import Cart from './screens/cart';
 import Header from './shared/header';
 import VerToken from './shared/verToken';
@@ -24,6 +25,9 @@ const HomeStackScreen = ({navigation}) => {
 			options={{ headerShown: false }}
 		/>
 		<HomeStack.Screen name="Products" component={Products}
+			options={{ headerShown: false }}
+		/>
+		<HomeStack.Screen name="Product" component={Product}
 			options={{ headerShown: false }}
 		/>
 	</HomeStack.Navigator>)
