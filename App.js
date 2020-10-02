@@ -13,7 +13,10 @@ import LogIn from './screens/logIn'
 import Register from './screens/register'
 import { FontAwesome } from '@expo/vector-icons';
 import Logout from './shared/logout';
+import {Provider} from 'react-redux';
+import configureStore from './configureStore.js'
 
+let store = configureStore()
 
 const HomeStack = createStackNavigator()
 const ProductsStack = createStackNavigator()
@@ -45,6 +48,7 @@ const HomeStackScreen = ({navigation}) => {
 
 const App = () => {
 	return (
+		<Provider store={store}>
 		<NavigationContainer>
 			<Drawer.Navigator>
 				<Drawer.Screen name='Home' component={HomeStackScreen} />
@@ -56,6 +60,7 @@ const App = () => {
 				{/* <Drawer.Screen name='Products' component={ProductsStackScreen} /> */}
 			</Drawer.Navigator>
 		</NavigationContainer>
+		</Provider>
 	);
 }
  

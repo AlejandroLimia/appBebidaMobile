@@ -6,12 +6,13 @@ import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-googl
 import AsyncStorage from '@react-native-community/async-storage';
 import Header from '../shared/header';
 import Footer from '../shared/footer';
+import { connect } from 'react-redux';
 import axios from "axios"
 import { RUTA_API } from '../shared/constants';
 
 
 
-export default function LogIn({ navigation }) {
+function Register({ navigation }) {
 	const image = require('../assets/background2.jpg');
 	const [name, setName] = useState("")
     const [surname, setSurname] = useState("")
@@ -102,24 +103,10 @@ export default function LogIn({ navigation }) {
                 pass:pass
             }
 
-			const response = await axios.post(`${RUTA_API}/api/user/register`, user)
-			if (response.data.success ==="false") {
-				let errors = response.data.error.errors;
-				if (errors.username !== undefined) alert(errors.username.message);
-				if (errors.mail !== undefined) alert(errors.mail.message);
-				return;
-			}
-			else {
-				try {
-					await AsyncStorage.setItem('token', response.data.token)
-				} 
-				catch (e) {
-					console.log(e)
-				}
-				alert(`Buenas ${response.data.firstName}`)
-				navigation.navigate('Home')
-			}
+			const response = props.createUser(user)
+			navigation.navigate('Home')
 		}
+		
 		
     }
 
@@ -192,6 +179,7 @@ export default function LogIn({ navigation }) {
 	}
 }
 
+
 const styles = StyleSheet.create({
 	header:{
 		backgroundColor: "#191919",
@@ -263,3 +251,15 @@ const styles = StyleSheet.create({
 	},
 	
 })
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchData: () => {
+            return dispatch(createUser())
+        }
+    }
+}
+
+
+
+export default connect(null, mapDispatchToProps)(Register)

@@ -8,26 +8,20 @@ import Header from '../shared/header';
 import Footer from '../shared/footer';
 import axios from 'axios';
 import { RUTA_API } from '../shared/constants';
+import { connect } from 'react-redux';
 
 
-export default function LogIn({ navigation }) {
+ function LogIn({ navigation }) {
 	const image = require('../assets/background2.jpg');
 	const [mail, setMail] = useState("")
 	const [pass, setPass] = useState("")
 	const sendInfo = async () => {
-		const response = await axios.post(`${RUTA_API}/api/user/login`, {mail, pass})
-		if(response.data.success) {
-			try {
-				await AsyncStorage.setItem('token', response.data.token)
-			} 
-			catch (e) {
-				console.log(e)
-			}
-			alert(`Buenas ${response.data.firstName}`)
-			navigation.navigate("Home")
+		if (this.mail === '' || this.pass === '') {
+            alert("Campos obligatorios")
 		}
 		else {
-			alert('salio mal')
+			const response = await this.props.loginUser(mail, pass)
+			navigation.navigate("Home")
 		}
 	}
 
@@ -139,3 +133,12 @@ const styles = StyleSheet.create({
 		borderColor: '#D1B653',
 	},
 })
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchData: () => {
+            return dispatch(loginUser())
+        }
+    }
+}
+
+export default connect(null, mapDispatchToProps)(LogIn)
