@@ -44,7 +44,7 @@ export default function Home({ navigation }) {
 					<Text style={styles.firstText}>Somos una empresa que distribuye alcohol de calidad, tenemos las bebidas alcoholicas mas exclusivas para que nuestros clientes disfruten. Buscamos brindar una experiencia y producto de primera calidad.</Text>
 					<Text style={styles.secondText}>Si estas buscando bebidas exclusivas para disfrutar aqui vas a poder encontrarlas</Text>
 				</View>
-				<Text style={styles.bolderr}>CATEGORIAS</Text>
+				<Text style={styles.bolder}>CATEGORIAS</Text>
 				<FlatList
 				    numColumns={2}
 					data={categories}
@@ -91,7 +91,6 @@ const styles = StyleSheet.create({
 	},
 	banner:{
 	   height: 200,
-	
 	},
 	decorationOne:{
 		position: "absolute",
@@ -144,26 +143,16 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 		fontSize: 20,
 		marginBottom: 20,
-		marginLeft: -29,
-	},
-	bolderr:{
-		fontFamily: 'Montserrat_700Bold',
-		color: "white",
-		textAlign: "center",
-		fontSize: 20,
-		marginBottom: 20,
-	
 	},
 	whoWeAre:{
-		margin: 80,
-		marginBottom: 120
+		marginVertical: 80,
+		alignItems: "center"
 	},
 	firstText:{
 		fontFamily: 'Montserrat_400Regular',
 		color: "white",
 		textAlign: "center",
 		width:280,
-		marginLeft: -25,
 		fontSize: 11
 	},
 	secondText:{
@@ -171,8 +160,7 @@ const styles = StyleSheet.create({
 		color: "white",
 		textAlign: "center",
 		width:280,
-		marginLeft: -27,
 		marginVertical:20,
-		fontSize: 13
+		fontSize: 13,
 	},
 })

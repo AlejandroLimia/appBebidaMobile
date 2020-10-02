@@ -90,7 +90,6 @@ export default function Product({navigation, route, ngrok}) {
 					<FontAwesome name="star-half-empty" size={24} color="#D1B653" />
 					<FontAwesome name="star-o" size={24} color="#D1B653" />
 				</View>
-				<Text style={styles.units}>{product.stock} unidades</Text>
 				<Text style={styles.price}>$ {product.price}</Text>
 				<View style={styles.quantities}>
 					<View style={styles.sum}>
@@ -102,6 +101,9 @@ export default function Product({navigation, route, ngrok}) {
 						<Text  style={styles.addToBagText}>Añadir al carrito</Text>
 						<FontAwesome name="cart-plus" size={40}  />
 					</View>
+				</View>
+				<View style={styles.description}>
+					<Text style={styles.descrip}>{product.description}</Text>
 				</View>
 				<View style={styles.mesures}>
 					<Text style={styles.mesure}>{product.ml} ml</Text>
@@ -197,7 +199,20 @@ const styles = StyleSheet.create({
 		alignItems:"center",
 		justifyContent: "space-between",
 		width: 280,
+		marginVertical:20,
+	},
+	description:{
+		color: "white",
+		display:"flex",
+		flexDirection:"row",
+		alignItems:"center",
+		width: 280,
 		marginTop:20,
+		textAlign: "justify"
+	},
+	descrip:{
+		color: "white",
+		textAlign: "justify"
 	},
 	mesure:{
 		fontWeight:"bold",
