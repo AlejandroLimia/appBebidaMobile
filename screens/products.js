@@ -38,7 +38,7 @@ export default function Products({navigation, route}) {
 					style={{width: '90%'}}
 					data={info}
 					renderItem={({item}) => { 
-						return <ProductCard data={item} ngrok={RUTA_API}  />
+						return <ProductCard data={item} ngrok={RUTA_API} navigation={navigation}  />
 					}}
 				/>
 				<StatusBar style="auto" />
