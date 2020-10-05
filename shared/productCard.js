@@ -25,7 +25,7 @@ const ProductCard = (props) => {
 				  <Text style={{...styles.cardText, fontSize: 18, fontWeight: 'bold' }} onPress={() => props.navigation.navigate('Product', {id: props.data._id})}>{props.data.title}</Text>
 				  <View style={styles.cardTextCart}>
 					  <Text style={{...styles.cardText, fontSize: 15, fontWeight: 'bold' }} onPress={() => props.navigation.navigate('Product', {id: props.data._id})}>${props.data.price}</Text>
-					  <FontAwesome name="cart-plus" size={40} color="#D1B653" onPress={() => props.addToCart(props.data._id, 1)} />
+					  <FontAwesome name="cart-plus" size={40} color="#D1B653" onPress={() => props.addToCart(props.data._id, 1, alert("se agrego al carrito"))} />
 				  </View>
 			  </View>
 		  </View>

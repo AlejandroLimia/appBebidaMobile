@@ -10,6 +10,7 @@ import Cart from './screens/cart';
 import VerToken from './shared/verToken';
 import LogIn from './screens/logIn'
 import Register from './screens/register'
+import Checkout from './screens/checkout'
 import Logout from './shared/logout';
 import { connect } from 'react-redux';
 
@@ -40,6 +41,8 @@ const RoutesApp = (props) => {
 		<Drawer.Screen name="Token" component={VerToken} />
 		<Drawer.Screen name="LogIn" component={LogIn} />
 		<Drawer.Screen name="Registrarse" component={Register} />
+		<Drawer.Screen name="Checkout" component={Checkout} />
+
 	</>)
 	: (<>
 		<Drawer.Screen name='Home' component={HomeStackScreen} />

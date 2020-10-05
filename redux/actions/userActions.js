@@ -127,7 +127,7 @@ export const userActions = {
 	},
 	removeFromCart: id => {
 		return async (dispatch, getState) => {
-			let cart = getCartItems()
+			let cart = await getCartItems()
 			cart.map((item, index) => {
 				if (item._id === id) {
 					item.quantity--

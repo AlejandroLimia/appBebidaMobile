@@ -33,7 +33,13 @@ export default userReducer =(state = initialState, action) => {
 				...initialState
             }
         case "LOAD_CART":
-			if(action.payload.length === 0) localStorage.removeItem('items')
+			
+			if(action.payload.length === 0){
+			const setCartt = async () => {
+				await AsyncStorage.removeItem('items')
+			}
+			setCartt()
+		   }
 			else {
 				const setCart = async () => {
 					await AsyncStorage.setItem('items', JSON.stringify(action.payload));

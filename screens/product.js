@@ -9,8 +9,10 @@ import Header from '../shared/header';
 import Footer from '../shared/footer';
 import { RUTA_API } from '../shared/constants';
 import { FlingGestureHandler } from 'react-native-gesture-handler';
+import { userActions } from '../redux/actions/userActions';
+import { connect } from 'react-redux';
 
-export default function Product({navigation, route, ngrok}) {
+ function Product(props) {
 	const vino = require('../assets/botella.png')
 	let [fontsLoaded] = useFonts({
 	  Montserrat_400Regular,
@@ -29,11 +31,13 @@ export default function Product({navigation, route, ngrok}) {
 		alcPct:"",
 		rating: "",
 		category: "",
+		id: "",
 
 	})
+
 	useEffect(() => {
 		 const rg = async()=>{
-		 const response = await axios.get(`${RUTA_API}/api/product/getProduct/${route.params.id}`)
+		 const response = await axios.get(`${RUTA_API}/api/product/getProduct/${props.route.params.id}`)
 		 const info = response.data.productFound
 		 console.log(info)
 		setProduct({
@@ -46,6 +50,7 @@ export default function Product({navigation, route, ngrok}) {
 			alcPct:info.alcPct,
 			rating: info.rating,
 			category: info.category,
+			id: info._id
 
 		})
 		}
@@ -66,13 +71,21 @@ export default function Product({navigation, route, ngrok}) {
             })
 		}
 	}
+	const addHandler = () =>{
+		props.addToCart(product.id, quantity.quantity);
+		product.stock = product.stock - quantity.quantity;
+		alert("se agrego al carrito")
+		setquantity({
+			quantity: 1
+		})
+	}
     if (!fontsLoaded) {
 		return <AppLoading />;
 	} 
 	else {
 		return (<>
 		<View style={styles.header}>
-			<Header nav={navigation} />
+			<Header nav={props.navigation} />
 		</View>
 		<View style={styles.container}>
 		<View style={styles.Classbanner}>
@@ -81,7 +94,7 @@ export default function Product({navigation, route, ngrok}) {
         </View>
 		<ScrollView>
 			<View style={styles.productViews}>
-				<Image style={styles.TheImage} source={{uri:`${RUTA_API}/${route.params.id}.jpg`}}></Image>
+				<Image style={styles.TheImage} source={{uri:`${RUTA_API}/${props.route.params.id}.jpg`}}></Image>
 				<Text style={styles.titleProduct}>{product.title}</Text>
 				<View  style={styles.ratings}>
 					<FontAwesome  name="star" size={24} color="#D1B653" />
@@ -90,6 +103,9 @@ export default function Product({navigation, route, ngrok}) {
 					<FontAwesome name="star-half-empty" size={24} color="#D1B653" />
 					<FontAwesome name="star-o" size={24} color="#D1B653" />
 				</View>
+				<Text style={styles.units}>{product.stock < 5 
+                    ? "Ultimas unidades"
+                    : ""} </Text>
 				<Text style={styles.price}>$ {product.price}</Text>
 				<View style={styles.quantities}>
 					<View style={styles.sum}>
@@ -97,25 +113,35 @@ export default function Product({navigation, route, ngrok}) {
 						<Text style={styles.quantity}>{quantity.quantity}</Text>
 						<Text  onPress={sumar} style={styles.plus}>+</Text>
 					</View>
-					<View style={styles.addToBag}>
-						<Text  style={styles.addToBagText}>Añadir al carrito</Text>
+					<View style={styles.addToBag}  >
+						<Text  style={styles.addToBagText} onPress={() => {addHandler()}}>Añadir al carrito</Text>
 						<FontAwesome name="cart-plus" size={40}  />
-					</View>
+					</View >
 				</View>
 				<View style={styles.description}>
 					<Text style={styles.descrip}>{product.description}</Text>
 				</View>
-				<View style={styles.mesures}>
+				<View style={styles.mesures}  >
 					<Text style={styles.mesure}>{product.ml} ml</Text>
 					<Text style={styles.mesure}>{product.alcPct} alc</Text>
 				</View>
 			</View>	
 		</ScrollView>
 		</View>
-		<Footer nav={navigation} />
+		<Footer nav={props.navigation} />
 		</>)
 	}
 }
+const mapStateToProps = state => {
+    return {
+        
+    }
+}
+const mapDispatchToProps = {
+	addToCart: userActions.addToCart,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Product);
 
 const styles = StyleSheet.create({
 	container: {
