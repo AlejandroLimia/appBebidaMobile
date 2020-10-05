@@ -5,8 +5,9 @@ import { AppLoading } from 'expo';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import { useEffect } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
+import { connect } from 'react-redux';
 
-export default function VerToken({ navigation }) {
+const VerToken = (props) => {
 	let [fontsLoaded] = useFonts({
 	  Montserrat_400Regular,
 	  Montserrat_700Bold,
@@ -14,20 +15,21 @@ export default function VerToken({ navigation }) {
 
 	const [token, setToken] = useState('No hay token')
 
-	useEffect(() => {
-		const getData = async () => {
-			try {
-				const value = await AsyncStorage.getItem('token')
-				if(value !== null) {
-				  setToken(value)
-				}
-			} catch(e) {
-				// error reading value
-			}
-		}
-		getData();
-	}, [])
-
+	// useEffect(() => {
+	// 	const getData = async () => {
+	// 		try {
+	// 			const value = await AsyncStorage.getItem('token')
+	// 			if(value !== null) {
+	// 			  setToken(value)
+	// 			}
+	// 		} catch(e) {
+	// 			// error reading value
+	// 		}
+	// 	}
+	// 	getData();
+	// }, [])
+	console.log(props.user)
+	
     if (!fontsLoaded) {
 		return <AppLoading />;
 	} 
@@ -35,11 +37,19 @@ export default function VerToken({ navigation }) {
 		return (
 		<View style={styles.container}>
 			<Text style={styles.bold}>Token</Text>
-			<Text>{token}</Text>
+			<Text>{props.token}</Text>
 		</View>
 		)
 	}
 }
+const mapStateToProps = state => {
+    return{
+		token: state.userReducer.token,
+		user: state.userReducer
+	}
+}
+ 
+export default connect(mapStateToProps)(VerToken);
 
 const styles = StyleSheet.create({
 	container: {

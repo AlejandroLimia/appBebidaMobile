@@ -1,5 +1,11 @@
+import AsyncStorage from "@react-native-community/async-storage";
 import axios from "axios"
 import { RUTA_API } from "../../shared/constants"
+
+const getCartItems = async () => {
+	let items = (await AsyncStorage.getItem('items') === null) ? [] : JSON.parse(await AsyncStorage.getItem('items'));
+	return items;
+}
 
 export const userActions = {
     createUser: (user, set = null) => {
@@ -69,7 +75,7 @@ export const userActions = {
     addToCart: (id, cantidad) => {
 		return async (dispatch, getState) => {
 			let found = false
-			let cart = getCartItems()
+			let cart = await getCartItems()
 			if (cart.length > 0) {
 				cart.map(item => {
 					if (item._id === id) {

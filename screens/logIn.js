@@ -9,19 +9,20 @@ import Footer from '../shared/footer';
 import axios from 'axios';
 import { RUTA_API } from '../shared/constants';
 import { connect } from 'react-redux';
+import { userActions } from '../redux/actions/userActions';
 
 
- function LogIn({ navigation }) {
+ function LogIn( props ) {
 	const image = require('../assets/background2.jpg');
 	const [mail, setMail] = useState("")
 	const [pass, setPass] = useState("")
 	const sendInfo = async () => {
-		if (this.mail === '' || this.pass === '') {
+		if (mail === '' || pass === '') {
             alert("Campos obligatorios")
 		}
 		else {
-			const response = await this.props.loginUser(mail, pass)
-			navigation.navigate("Home")
+			await props.loginUser({mail, pass})
+			props.navigation.navigate("Home")
 		}
 	}
 
@@ -59,13 +60,13 @@ import { connect } from 'react-redux';
 					<Text onPress={sendInfo}>Ingresar</Text>
 				</View>
 				<View style={styles.btnSecondary}>
-					<Text style={{color: '#fff'}} onPress={() => navigation.navigate('Registrarse')}>Crear cuenta</Text>
+					<Text style={{color: '#fff'}} onPress={() => props.navigation.navigate('Registrarse')}>Crear cuenta</Text>
 				</View>
 			</View>
 		</View>
 		</ImageBackground>
 		<View>
-		 <Footer nav={navigation}/>
+		 <Footer nav={props.navigation}/>
 		</View>
         </>
 		)
@@ -133,12 +134,8 @@ const styles = StyleSheet.create({
 		borderColor: '#D1B653',
 	},
 })
-const mapDispatchToProps = dispatch => {
-    return {
-        fetchData: () => {
-            return dispatch(loginUser())
-        }
-    }
+const mapDispatchToProps = {
+    loginUser: userActions.loginUser
 }
 
 export default connect(null, mapDispatchToProps)(LogIn)

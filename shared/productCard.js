@@ -4,42 +4,55 @@ import { Button, Image, StyleSheet, Text, View,TouchableHighlight } from 'react-
 import { AppLoading } from 'expo';
 import { FontAwesome } from '@expo/vector-icons';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
-import { roundToNearestPixel } from 'react-native/Libraries/Utilities/PixelRatio';
+import { userActions } from '../redux/actions/userActions';
+import { connect } from 'react-redux';
 
-export default function ProductCard({data, ngrok, navigation, route }) {
+const ProductCard = (props) => {
 	let [fontsLoaded] = useFonts({
-	  Montserrat_400Regular,
-	  Montserrat_700Bold,
-	});
-    if (!fontsLoaded) {
-		return <AppLoading />;
-	} 
-	else {
-		return (
-		<View style={styles.card}>
-			<View style={styles.cardImg} onPress={() => navigation.navigate('Product', {id: data._id} )}>
-				<Image style={styles.img} source={{uri: `${ngrok}/${data._id}.jpg`}} />
-			</View>
-			<View style={styles.cardText}>
-				<Text style={{...styles.cardText, fontSize: 18, fontWeight: 'bold' }} onPress={() => navigation.navigate('Product', {id: data._id})}>{data.title}</Text>
-				<View style={styles.cardTextCart}>
-					<Text style={{...styles.cardText, fontSize: 15, fontWeight: 'bold' }} onPress={() => navigation.navigate('Product', {id: data._id})}>${data.price}</Text>
-					<FontAwesome name="cart-plus" size={40} color="#D1B653" />
-				</View>
-			</View>
-		</View>
-		)
-	}
+		Montserrat_400Regular,
+		Montserrat_700Bold,
+	  });
+	  if (!fontsLoaded) {
+		  return <AppLoading />;
+	  } 
+	  else {
+		  return (
+		  <View style={styles.card}>
+			  <View style={styles.cardImg} onPress={() => props.navigation.navigate('Product', {id: props.data._id} )}>
+				  <Image style={styles.img} source={{uri: `${props.ngrok}/${props.data._id}.jpg`}} />
+			  </View>
+			  <View style={styles.cardText}>
+				  <Text style={{...styles.cardText, fontSize: 18, fontWeight: 'bold' }} onPress={() => props.navigation.navigate('Product', {id: props.data._id})}>{props.data.title}</Text>
+				  <View style={styles.cardTextCart}>
+					  <Text style={{...styles.cardText, fontSize: 15, fontWeight: 'bold' }} onPress={() => props.navigation.navigate('Product', {id: props.data._id})}>${props.data.price}</Text>
+					  <FontAwesome name="cart-plus" size={40} color="#D1B653" onPress={() => props.addToCart(props.data._id, 1)} />
+				  </View>
+			  </View>
+		  </View>
+		  )
+	  }
+  }
+ 
+const mapStateToProps = state => {
+    return {
+        
+    }
 }
+const mapDispatchToProps = {
+	addToCart: userActions.addToCart
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductCard);
 
 const styles = StyleSheet.create({
 	card: {
 		borderWidth: 2,
-		borderColor: '#D1B653',
+		borderBottomColor: '#D1B653',
 		width: '100%',
 		height: 100,
 		flexDirection: 'row',
-		padding: 3
+		padding: 3,
+		marginBottom: 10
 	},
 	cardImg: {
 		width: '30%'

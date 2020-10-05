@@ -1,6 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { FlatList, ScrollView, StyleSheet, Text, View, StatusBar } from 'react-native';
 import { AppLoading } from 'expo';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import ProductCard from '../shared/productCard';
@@ -41,7 +40,7 @@ export default function Products({navigation, route}) {
 						return <ProductCard data={item} ngrok={RUTA_API} navigation={navigation}  />
 					}}
 				/>
-				<StatusBar style="auto" />
+				<StatusBar style="light-content" />
 			</View>
 		</ScrollView>
 		</View>
