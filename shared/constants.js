@@ -1,3 +1,3 @@
-export const RUTA_API = 'https://a3490a9f1d0d.ngrok.io' 
-// DESDE 5/10/2020 a las 12:00h
-// HASTA 5/10/2020 a las 20:00h
+export const RUTA_API = 'https://782e7d8f88c5.ngrok.io' 
+// DESDE 6/10/2020 a las 9:40h
+// HASTA 6/10/2020 a las 17:40h
