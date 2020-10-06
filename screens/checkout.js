@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { Button, StyleSheet, Text, View, Image, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { Button, StyleSheet, Text, View, Image, ScrollView, TextInput } from 'react-native';
 import { AppLoading } from 'expo';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import { connect } from 'react-redux';
@@ -10,12 +10,29 @@ import Header from '../shared/header';
 import { color } from 'react-native-reanimated';
 import { RUTA_API } from '../shared/constants';
 import product from './product';
+import CreditCardDisplay from "react-native-credit-card-display";
 
 const Checkout = (props) => {
     let [fontsLoaded] = useFonts({
 		Montserrat_400Regular,
 		Montserrat_700Bold,
 	  });
+
+	  const [card, setCard] = useState({
+		  expiry: "1222",
+		  cvc: 123,
+		  type: 'visa',
+		  number: 4134123412341234,
+		  name: "Tester Tee",
+		  flip: false,
+	  })
+
+	  const inputHandler = (value, field) => {
+		  setCard({
+			  ...card,
+			  [field]: value
+		  })
+	  }
 	  
   
 	  if (!fontsLoaded) {
@@ -27,12 +44,50 @@ const Checkout = (props) => {
 		 	 <Header nav={props.navigation} />
 		  </View>
           <View style={styles.container}>
-            <Text style={styles.bold}>Checkout</Text>
-            
+            <Text style={styles.bold}>Pagar</Text>
+			<View>
+				<CreditCardDisplay
+					number={card.number}
+					cvc={card.cvc}
+					expiration={card.expiry}
+					name={card.name}
+					since="   "
+					fontSize={20}
+					flipped={card.flip}
+					frontStyles={{color: "#fff"}}
+					cardStyles={{color: "#fff"}}
+				/>
+			</View>
+			<TextInput 
+			style={styles.inputs}
+			placeholder="Numero. 16 digitos"
+			placeholderTextColor="#999999"
+			onFocus={() => inputHandler(false, 'flip')} 
+			onChangeText={(val) => inputHandler(parseInt(val), 'number')} />
+			<TextInput 
+			style={styles.inputs}
+			placeholder="Nombre. Ej: Juan Perez"
+			placeholderTextColor="#999999"
+			onFocus={() => inputHandler(false, 'flip')} 
+			onChangeText={(val) => inputHandler(val, 'name')} />
+			<TextInput 
+			style={styles.inputs}
+			placeholder="Fecha de expiracion. MM/AA"
+			placeholderTextColor="#999999"
+			onFocus={() => inputHandler(false, 'flip')}
+			onChangeText={(val) => inputHandler(val, 'expiry')} />
+			<TextInput 
+			style={styles.inputs}
+			placeholder="Codigo de seguridad"
+			placeholderTextColor="#999999" 
+			onFocus={() => inputHandler(true, 'flip')}
+			onChangeText={(val) => inputHandler(val, 'cvc')} />
+
             <View style={styles.botones} >
                 <Text style={styles.botonIr} onPress={() => props.navigation.navigate('Cart')} >volver</Text>
                 <Text style={styles.botonVaciar}>pagar</Text>
             </View>
+
           </View>
           <Footer nav={props.navigation} />
           </>)
@@ -43,7 +98,16 @@ const Checkout = (props) => {
             flex: 1,
             backgroundColor: '#fff',
             backgroundColor: "#000",
-        },
+		},
+		inputs:{
+			margin: 10,
+			height: 40, 
+			borderBottomColor: '#D1B653', 
+			borderBottomWidth: 2, 
+			color: "#fff", 
+			width:240,
+			textAlign:"center",
+		  },
         header:{
             backgroundColor: "#191919",
             height: 80,
