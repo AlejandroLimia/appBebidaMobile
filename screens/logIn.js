@@ -1,13 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
-import { Button, StyleSheet, Text, View, TextInput, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ImageBackground, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import { AppLoading } from 'expo';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
-import AsyncStorage from '@react-native-community/async-storage';
-import Header from '../shared/header';
 import Footer from '../shared/footer';
-import axios from 'axios';
-import { RUTA_API } from '../shared/constants';
 import { connect } from 'react-redux';
 import { userActions } from '../redux/actions/userActions';
 
@@ -51,29 +46,31 @@ import { userActions } from '../redux/actions/userActions';
        
 		<ImageBackground source={image} style={styles.banner}>
 		<View style={styles.container}>
+		<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
 			<View style={styles.containerDos}>
 				<Text style={styles.bold}>Ingresar a mi cuenta</Text>
-				<TextInput
-				keyboardType= 'email-address'
-				style={styles.inputs}
-				placeholder="example@mail.com"
-				placeholderTextColor="#9e9e9e" 
-				onChangeText={(val) => setMail(val)}
-				/>
-				<TextInput
-				//secureTextEntry= "true"
-				style={styles.inputs}
-				onChangeText={(val)=> setPass(val)}
-				placeholder="escribe tu contraseña"
-				placeholderTextColor="#9e9e9e"  
-				/>
-				<View style={send.status ? {...styles.btnPrimary, backgroundColor: "gray"} : styles.btnPrimary}>
+						<TextInput
+						keyboardType= 'email-address'
+						style={styles.inputs}
+						placeholder="example@mail.com"
+						placeholderTextColor="#9e9e9e" 
+						onChangeText={(val) => setMail(val)}
+						/>
+						<TextInput
+						//secureTextEntry= "true"
+						style={styles.inputs}
+						onChangeText={(val)=> setPass(val)}
+						placeholder="escribe tu contraseña"
+						placeholderTextColor="#9e9e9e"  
+						/>
+				<View style={send.status ? {backgroundColor: "gray"} : styles.btnPrimary}>
 					<Text onPress={sendInfo}>Ingresar</Text>
 				</View>
 				<View style={styles.btnSecondary}>
 					<Text style={{color: '#fff'}} onPress={() => props.navigation.navigate('Registrarse')}>Crear cuenta</Text>
 				</View>
 			</View>
+		</TouchableWithoutFeedback>
 		</View>
 		</ImageBackground>
 		<View>

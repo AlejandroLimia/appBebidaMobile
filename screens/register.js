@@ -1,14 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
-import { Button, StyleSheet, Text, View, ImageBackground, TextInput } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { AppLoading } from 'expo';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
-import AsyncStorage from '@react-native-community/async-storage';
-import Header from '../shared/header';
 import Footer from '../shared/footer';
 import { connect } from 'react-redux';
-import axios from "axios"
-import { RUTA_API } from '../shared/constants';
 import { userActions } from '../redux/actions/userActions';
 
 
@@ -144,44 +139,44 @@ function Register( props ) {
             <>
 		<ImageBackground source={image} style={styles.banner}>
 		<View style={styles.container}>
+		<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
 			<View style={styles.containerDos}>
 				<Text style={styles.bold}>Crear cuenta</Text>
+						<TextInput
+						style={styles.inputs}
+						placeholder="Escribe tu nombre aqui"
+						placeholderTextColor="#ffffffa9" 
+						onChangeText={(val) => setName(val)}
+						/>
+						{mensajes.firstName1 ? <Text style={styles.mensajeError} >*Tu nombre debe contener al menos 3 caracteres</Text> : mensajes.firstName2 ?  <Text style={styles.mensajeError}>*Tu nombre puede contener solo letras mayusculas, minusculas, numeros, '_' y '.'</Text> : <Text></Text>}
 				
-          		<TextInput
-                style={styles.inputs}
-				placeholder="Escribe tu nombre aqui"
-				placeholderTextColor="#ffffffa9" 
-				onChangeText={(val) => setName(val)}
-				/>
-				{mensajes.firstName1 ? <Text style={styles.mensajeError} >*Tu nombre debe contener al menos 3 caracteres</Text> : mensajes.firstName2 ?  <Text style={styles.mensajeError}>*Tu nombre puede contener solo letras mayusculas, minusculas, numeros, '_' y '.'</Text> : <Text></Text>}
-        
-				
-				<TextInput
+						
+						<TextInput
 						style={styles.inputs}
 						placeholder="Ecribe tu apellido aqui"
 						placeholderTextColor="#ffffffa9" 
 						onChangeText={(val) => setSurname(val)}
-					/>
-					{mensajes.lastName1 ? <Text style={styles.mensajeError}>*Tu apellido debe contener al menos 3 caracteres</Text> : mensajes.lastName2 ?  <Text style={styles.mensajeError}>*Tu apellido puede contener solo letras mayusculas, minusculas, numeros, '_' y '.'</Text> : <Text></Text>}
-				
-					<TextInput
+						/>
+						{mensajes.lastName1 ? <Text style={styles.mensajeError}>*Tu apellido debe contener al menos 3 caracteres</Text> : mensajes.lastName2 ?  <Text style={styles.mensajeError}>*Tu apellido puede contener solo letras mayusculas, minusculas, numeros, '_' y '.'</Text> : <Text></Text>}
+						
+						<TextInput
 						style={styles.inputs}
 						keyboardType= 'email-address'
 						placeholder="Escribe tu email aqui"
 						placeholderTextColor="#ffffffa9"
 						onChangeText={(val) => setMail(val)}
-					/>
-					{mensajes.mail1 ? <Text style={styles.mensajeError}>*Tu mail debe contener al menos 6 caracteres</Text> : mensajes.mail2 ?  <Text style={styles.mensajeError}>*Tu mail debe ser un mail valido, por ejemplo: 'example@server.com</Text> : <Text></Text>}
-			
-				
-				<TextInput
-					style={styles.inputs}
-					// secureTextEntry= "true"
-					placeholder="Escribe tu contraseña aca"
-					placeholderTextColor="#ffffffa9"
-					onChangeText={(val)=> setPass(val)}
-				/> 
-				{mensajes.pass1 ? <Text style={styles.mensajeError}>*Tu contraseña debe contener al menos 5 caracteres</Text> : mensajes.pass2 ?  <Text style={styles.mensajeError}>*Tu contraseña debe contener al menos una letra mayuscula, una minuscula y un numero </Text> : <Text></Text>}
+						/>
+						{mensajes.mail1 ? <Text style={styles.mensajeError}>*Tu mail debe contener al menos 6 caracteres</Text> : mensajes.mail2 ?  <Text style={styles.mensajeError}>*Tu mail debe ser un mail valido, por ejemplo: 'example@server.com</Text> : <Text></Text>}
+					
+						
+						<TextInput
+						style={styles.inputs}
+						// secureTextEntry= "true"
+						placeholder="Escribe tu contraseña aca"
+						placeholderTextColor="#ffffffa9"
+						onChangeText={(val)=> setPass(val)}
+						/> 
+						{mensajes.pass1 ? <Text style={styles.mensajeError}>*Tu contraseña debe contener al menos 5 caracteres</Text> : mensajes.pass2 ?  <Text style={styles.mensajeError}>*Tu contraseña debe contener al menos una letra mayuscula, una minuscula y un numero </Text> : <Text></Text>}
                 <View style={styles.btnPrimary}>
 					<Text onPress={sendInfo}>Crear cuenta</Text>
 				</View>
@@ -189,6 +184,7 @@ function Register( props ) {
 					<Text style={{color: '#fff'}} onPress={() => props.navigation.navigate('LogIn')}>Ya tengo cuenta</Text>
 				</View>
 			</View>
+		</TouchableWithoutFeedback>
 		</View>
 		</ImageBackground>
 		<View>

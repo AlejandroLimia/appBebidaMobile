@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
 	decorationTwo:{
 		position: "absolute",
 		zIndex: 1,
-		width:130,
+		width:120,
 		height:280,
 		right:0,
 		top: 300,
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
 		fontFamily: 'Montserrat_400Regular',
 		color: "white",
 		textAlign: "center",
-		width:280,
+		width:270,
 		fontSize: 11
 	},
 	secondText:{

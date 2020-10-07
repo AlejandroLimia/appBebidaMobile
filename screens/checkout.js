@@ -1,15 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { Button, StyleSheet, Text, View, Image, ScrollView, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TextInput,TouchableWithoutFeedback,Keyboard } from 'react-native';
 import { AppLoading } from 'expo';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import { connect } from 'react-redux';
 import { userActions } from '../redux/actions/userActions';
 import Footer from '../shared/footer';
 import Header from '../shared/header';
-import { color } from 'react-native-reanimated';
-import { RUTA_API } from '../shared/constants';
-import product from './product';
 import CreditCardDisplay from "react-native-credit-card-display";
 
 const Checkout = (props) => {
@@ -44,8 +40,8 @@ const Checkout = (props) => {
 		 	 <Header nav={props.navigation} />
 		  </View>
           <View style={styles.container}>
-            <Text style={styles.bold}>Pagar</Text>
-			<View>
+            <Text style={styles.title}>Pagar</Text>
+			<View style={styles.card} >
 				<CreditCardDisplay
 					number={card.number}
 					cvc={card.cvc}
@@ -58,31 +54,42 @@ const Checkout = (props) => {
 					cardStyles={{color: "#fff"}}
 				/>
 			</View>
-			<TextInput 
-			style={styles.inputs}
-			placeholder="Numero. 16 digitos"
-			placeholderTextColor="#999999"
-			onFocus={() => inputHandler(false, 'flip')} 
-			onChangeText={(val) => inputHandler(parseInt(val), 'number')} />
-			<TextInput 
-			style={styles.inputs}
-			placeholder="Nombre. Ej: Juan Perez"
-			placeholderTextColor="#999999"
-			onFocus={() => inputHandler(false, 'flip')} 
-			onChangeText={(val) => inputHandler(val, 'name')} />
-			<TextInput 
-			style={styles.inputs}
-			placeholder="Fecha de expiracion. MM/AA"
-			placeholderTextColor="#999999"
-			onFocus={() => inputHandler(false, 'flip')}
-			onChangeText={(val) => inputHandler(val, 'expiry')} />
-			<TextInput 
-			style={styles.inputs}
-			placeholder="Codigo de seguridad"
-			placeholderTextColor="#999999" 
-			onFocus={() => inputHandler(true, 'flip')}
-			onChangeText={(val) => inputHandler(val, 'cvc')} />
+			<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
 
+				<View  style={styles.card}>
+					<TextInput 
+					style={styles.inputs}
+					placeholder="Numero. 16 digitos"
+					placeholderTextColor="#999999"
+					onFocus={() => inputHandler(false, 'flip')} 
+					keyboardType= 'number-pad'
+					maxLength= {16}
+					onChangeText={(val) => inputHandler(parseInt(val), 'number')} />
+					<TextInput 
+					style={styles.inputs}
+					placeholder="Nombre. Ej: Juan Perez"
+					placeholderTextColor="#999999"
+					onFocus={() => inputHandler(false, 'flip')} 
+					onChangeText={(val) => inputHandler(val, 'name')} />
+					<TextInput 
+					style={styles.inputs}
+					placeholder="Fecha de expiracion. MM/AA"
+					placeholderTextColor="#999999"
+					onFocus={() => inputHandler(false, 'flip')}
+					keyboardType= 'number-pad'
+					maxLength= {4}
+					onChangeText={(val) => inputHandler(val, 'expiry')} />
+					<TextInput 
+					style={styles.inputs}
+					placeholder="Codigo de seguridad"
+					placeholderTextColor="#999999" 
+					onFocus={() => inputHandler(true, 'flip')}
+					keyboardType= 'number-pad'
+					maxLength= {4}
+					onChangeText={(val) => inputHandler(val, 'cvc')} />
+				</View>
+
+            </TouchableWithoutFeedback>
             <View style={styles.botones} >
                 <Text style={styles.botonIr} onPress={() => props.navigation.navigate('Cart')} >volver</Text>
                 <Text style={styles.botonVaciar}>pagar</Text>
@@ -99,6 +106,18 @@ const Checkout = (props) => {
             backgroundColor: '#fff',
             backgroundColor: "#000",
 		},
+		card:{
+		 display:'flex',
+		 alignItems: 'center',
+		 marginVertical: 12.5
+		},
+		title:{
+			fontFamily: 'Montserrat_700Bold',
+			color: "#fff",
+			textAlign: "center",
+			backgroundColor: "#58482a",
+			paddingVertical: 10,
+		},	
 		inputs:{
 			margin: 10,
 			height: 40, 
