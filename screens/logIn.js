@@ -30,8 +30,10 @@ import { userActions } from '../redux/actions/userActions';
 			setSend({status: false})
 		}
 		else {
-			await props.loginUser({mail, pass}, setSend)
-			props.navigation.navigate("Home")
+			const test = await props.loginUser({mail, pass}, setSend)
+			if(test === undefined) {
+				props.navigation.navigate("Home")
+			}
 		}
 	}
 
@@ -65,7 +67,7 @@ import { userActions } from '../redux/actions/userActions';
 				placeholder="escribe tu contraseña"
 				placeholderTextColor="#9e9e9e"  
 				/>
-				<View style={send.status ? {backgroundColor: "gray"} : styles.btnPrimary}>
+				<View style={send.status ? {...styles.btnPrimary, backgroundColor: "gray"} : styles.btnPrimary}>
 					<Text onPress={sendInfo}>Ingresar</Text>
 				</View>
 				<View style={styles.btnSecondary}>
