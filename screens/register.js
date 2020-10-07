@@ -9,10 +9,11 @@ import Footer from '../shared/footer';
 import { connect } from 'react-redux';
 import axios from "axios"
 import { RUTA_API } from '../shared/constants';
+import { userActions } from '../redux/actions/userActions';
 
 
 
-function Register({ navigation }) {
+function Register( props ) {
 	const image = require('../assets/background2.jpg');
 	const [name, setName] = useState("")
     const [surname, setSurname] = useState("")
@@ -123,7 +124,7 @@ function Register({ navigation }) {
             }
 
 			await props.createUser(user, setSend)
-			navigation.navigate('Home')
+			props.navigation.navigate('Home')
 		}
 		
 		
@@ -185,13 +186,13 @@ function Register({ navigation }) {
 					<Text onPress={sendInfo}>Crear cuenta</Text>
 				</View>
 				<View style={styles.btnSecondary}>
-					<Text style={{color: '#fff'}} onPress={() => navigation.navigate('LogIn')}>Ya tengo cuenta</Text>
+					<Text style={{color: '#fff'}} onPress={() => props.navigation.navigate('LogIn')}>Ya tengo cuenta</Text>
 				</View>
 			</View>
 		</View>
 		</ImageBackground>
 		<View>
-		 <Footer nav={navigation}/>
+		 <Footer nav={props.navigation}/>
 		</View>
         </>
 		)
@@ -271,12 +272,8 @@ const styles = StyleSheet.create({
 	
 })
 
-const mapDispatchToProps = dispatch => {
-    return {
-        fetchData: () => {
-            return dispatch(createUser())
-        }
-    }
+const mapDispatchToProps = {
+    createUser: userActions.createUser
 }
 
 
