@@ -55,14 +55,17 @@ const Cart = (props) => {
 			  })
 			}
 			</ScrollView>
+			{props.cart.length !== 0 && 
+			 (<>
 			 <View style={styles.total}>
 				<Text style={styles.totale}>Total</Text>
 				<Text style={styles.price} >{moneyTotal()}</Text>
 		     </View>
 			<View style={styles.botones} >
-					<Text style={styles.botonIr} onPress={() => props.navigation.navigate('Checkout')} >Ir mi pedido</Text>
 					<Text style={styles.botonVaciar}>Vaciar carrito</Text>
+					<Text style={styles.botonIr} onPress={() => props.navigation.navigate('Checkout')} >Pagar</Text>
 			</View>
+			</>)}
 		  </View>
 		  <Footer nav={props.navigation} />
 		</>)
