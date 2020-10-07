@@ -37,9 +37,9 @@ const Cart = (props) => {
 			<ScrollView>
 			  {props.cart.length === 0
 			  ? <Text style={styles.noItems}>No hay items en el carrito</Text>
-			  : props.cart.map(item => {
+			  : props.cart.map((item,index) => {
 				  return (
-				  <View style={styles.allItems} >
+				  <View style={styles.allItems} key={index}>
 					<View style={styles.infoItem}>
 						<Image style={styles.TheImage} source={{uri:`${RUTA_API}/${item._id}.jpg`}}></Image>
 						<View>

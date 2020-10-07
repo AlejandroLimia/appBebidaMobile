@@ -38,14 +38,16 @@ export const userActions = {
             return response
         }
     },
-    loginUser: user => {
+    loginUser: (user, set = null) => {
 		return async (dispatch, getState) => {
 			const response = await axios.post(RUTA_API + "/api/user/login", user)
 
 			if (!response.data.success) {
+				set({ status: false })
 				alert(response.data.error)
 				return response.data.error
 			} else {
+				set({ status: false })
 				alert(`Buenas ${response.data.firstName}!`)
 				dispatch({
 					type: "USER_IN",
