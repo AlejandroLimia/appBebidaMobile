@@ -28,7 +28,6 @@ const Checkout = (props) => {
 		  </View>
           <View style={styles.container}>
             <Text style={styles.bold}>Checkout</Text>
-            
             <View style={styles.botones} >
                 <Text style={styles.botonIr} onPress={() => props.navigation.navigate('Cart')} >volver</Text>
                 <Text style={styles.botonVaciar}>pagar</Text>
