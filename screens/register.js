@@ -19,6 +19,10 @@ function Register({ navigation }) {
     const [mail, setMail] = useState("")
     const [pass, setPass] = useState("")
 
+	const [send, setSend] = useState({
+		status: false
+	})
+
     const [mensajes, setMensajes] = useState({
         firstName1: false,
         firstName2: false,
@@ -31,6 +35,8 @@ function Register({ navigation }) {
     })
     
     const sendInfo = async() => {
+		send.status = true
+		setSend({status: true})
 		const uname = RegExp(/^[a-zA-Z0-9._]+$/)
 		const reMail = RegExp(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)
 		const rePass = RegExp(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*[!{}[\]@#$%\^&*)(+=._-]).{5,}/)
@@ -46,55 +52,68 @@ function Register({ navigation }) {
 
         if (name === '' || surname === '' || mail === '' || pass === '') {
             alert("Por favor complete todos los campos")
-
+			send.status = false
+			setSend({status: false})
             // name validation
         } else if (name.length < 3) {
             setMensajes({
                 ...mensajes,
                 firstName1: true
-            })
+			})
+			send.status = false
+			setSend({status: false})
         }   else if (!uname.test(name)) {
             setMensajes({
                 ...mensajes,
                 firstName2: true
             })
-
+			send.status = false
+			setSend({status: false})
             // lastName validation
         } else if (surname.length < 3) {
             setMensajes({
                 ...mensajes,
                 lastName1: true
-            })
+			})
+			send.status = false
+			setSend({status: false})
         } else if (!uname.test(surname)) {
             setMensajes({
                 ...mensajes,
                 lastName2: true
             })
-
+			send.status = false
+			setSend({status: false})
             // mail validation
         } else if (mail.length < 6) {
             setMensajes({
                 ...mensajes,
                 mail1: true
-            })
+			})
+			send.status = false
+			setSend({status: false})
         } else if (!reMail.test(mail)) {
             setMensajes({
                 ...mensajes,
                 mail2: true
             })
-
+			send.status = false
+			setSend({status: false})
             // pass validation
         } else if (pass.length < 5) {
             setMensajes({
                 ...mensajes,
                 pass1: true
-            })
+			})
+			send.status = false
+			setSend({status: false})
         } else if (!rePass.test(pass)) {
             setMensajes({
                 ...mensajes,
                 pass2: true
             })
-
+			send.status = false
+			setSend({status: false})
         } else {
 			const user = {
 				firstName:name,
@@ -103,7 +122,7 @@ function Register({ navigation }) {
                 pass:pass
             }
 
-			const response = props.createUser(user)
+			await props.createUser(user, setSend)
 			navigation.navigate('Home')
 		}
 		

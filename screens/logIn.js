@@ -14,14 +14,23 @@ import { userActions } from '../redux/actions/userActions';
 
  function LogIn( props ) {
 	const image = require('../assets/background2.jpg');
+	
+	const [send, setSend] = useState({
+		status: false
+	})
+	
 	const [mail, setMail] = useState("")
 	const [pass, setPass] = useState("")
 	const sendInfo = async () => {
+		send.status = true
+		setSend({status: true})
 		if (mail === '' || pass === '') {
-            alert("Campos obligatorios")
+			alert("Campos obligatorios")
+			send.status = false
+			setSend({status: false})
 		}
 		else {
-			await props.loginUser({mail, pass})
+			await props.loginUser({mail, pass}, setSend)
 			props.navigation.navigate("Home")
 		}
 	}
@@ -56,7 +65,7 @@ import { userActions } from '../redux/actions/userActions';
 				placeholder="escribe tu contraseña"
 				placeholderTextColor="#9e9e9e"  
 				/>
-				<View style={styles.btnPrimary}>
+				<View style={send.status ? {backgroundColor: "gray"} : styles.btnPrimary}>
 					<Text onPress={sendInfo}>Ingresar</Text>
 				</View>
 				<View style={styles.btnSecondary}>
