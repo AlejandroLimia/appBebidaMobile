@@ -62,7 +62,7 @@ const Cart = (props) => {
 				<Text style={styles.price} >{moneyTotal()}</Text>
 		     </View>
 			<View style={styles.botones} >
-					<Text style={styles.botonVaciar}>Vaciar carrito</Text>
+					<Text style={styles.botonVaciar} onPress={props.clearCart}>Vaciar carrito</Text>
 					<Text style={styles.botonIr} onPress={() => props.navigation.navigate('Checkout')} >Pagar</Text>
 			</View>
 			</>)}
@@ -195,7 +195,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = {
 	removeFromCart: userActions.removeFromCart,
-	actCart: userActions.actCart
+	clearCart: userActions.clearCart
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)

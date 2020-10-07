@@ -11,7 +11,9 @@ import VerToken from './shared/verToken';
 import LogIn from './screens/logIn'
 import Register from './screens/register'
 import Checkout from './screens/checkout'
+import Success from './screens/success'
 import Logout from './shared/logout';
+
 import { connect } from 'react-redux';
 
 const HomeStack = createStackNavigator();
@@ -29,6 +31,12 @@ const HomeStackScreen = ({navigation}) => {
 		<HomeStack.Screen name="Product" component={Product}
 			options={{ headerShown: false }}
 		/>
+		<HomeStack.Screen name="Checkout" component={Checkout}
+			options={{ headerShown: false }}
+		/>
+		<HomeStack.Screen name="Success" component={Success}
+			options={{ headerShown: false }}
+		/>
 	</HomeStack.Navigator>)
 }
 
@@ -41,7 +49,6 @@ const RoutesApp = (props) => {
 		<Drawer.Screen name="Token" component={VerToken} />
 		<Drawer.Screen name="LogIn" component={LogIn} />
 		<Drawer.Screen name="Registrarse" component={Register} />
-		<Drawer.Screen name="Checkout" component={Checkout} />
 
 	</>)
 	: (<>
