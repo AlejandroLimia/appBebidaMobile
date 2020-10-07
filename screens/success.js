@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput,TouchableWithoutFeedback,Keyboard } from 'react-native';
+import { StyleSheet, Text, View, Image} from 'react-native';
 import { AppLoading } from 'expo';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import { connect } from 'react-redux';
 import { userActions } from '../redux/actions/userActions';
 import Footer from '../shared/footer';
 import Header from '../shared/header';
-import CreditCardDisplay from "react-native-credit-card-display";
+import { RUTA_API } from '../shared/constants';
 
 const Success = (props) => {
     let [fontsLoaded] = useFonts({
 		Montserrat_400Regular,
 		Montserrat_700Bold,
 	  });
-
-	  
+      const [loading, setLoading] = useState(true)
+      
+      setTimeout(() => {
+        setLoading(false)
+    }, 4000);
 	  
   
 	  if (!fontsLoaded) {
@@ -27,11 +30,19 @@ const Success = (props) => {
 		  </View>
           <View style={styles.container}>
             <Text style={styles.title}>Compra Realizada</Text>
-			
+            {loading 
+			?< View  style={styles.allThankYouOne}>
+			<Image source={{uri:`${RUTA_API}/loader.gif`}} style={{width: 100, height: 100}}/>
+			<Text style={styles.thankYouText}>Procesando compra</Text>
+			</ View>
+            :<View  style={styles.allThankYou}>
+                <Text style={styles.thankYou}>¡Muchas gracias por su compra!</Text>
+				<Text style={styles.thankYouText}>En breve le llegara un mail.</Text>
+			    <Image source={require('../assets/hola3.gif')} />
+            </View>}
             <View style={styles.botones} >
-                <Text style={styles.botonIr} onPress={() => props.navigation.navigate('Cart')} >volver</Text>
+                <Text style={styles.botonIr} onPress={() => props.navigation.navigate('Products')} >Seguir comprando</Text>
             </View>
-
           </View>
           <Footer nav={props.navigation} />
           </>)
@@ -63,6 +74,30 @@ const Success = (props) => {
             color: "#fff",
             fontSize: 18,
             
+        },
+        allThankYouOne:{
+            height: 480,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+        },
+        allThankYou:{
+           display: "flex",
+           justifyContent: "space-between",
+           height: 480
+        },
+        thankYou:{
+            color: "#fff",
+            fontSize: 30,
+            textAlign:"center",
+            fontWeight: "bold",
+            marginTop: 20,
+        },
+        thankYouText:{
+            textAlign:"center",
+            color: "#fff",
+            fontSize: 18,
+            marginTop: 10,
         },
         botones:{
             display:"flex",

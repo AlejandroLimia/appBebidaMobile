@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput, ImageBackground, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import { StyleSheet, Text, View, TextInput, ImageBackground, TouchableWithoutFeedback, Keyboard, Image} from 'react-native';
 import { AppLoading } from 'expo';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import Footer from '../shared/footer';
@@ -34,7 +34,7 @@ import { Snackbar } from 'react-native-paper';
 	const sendInfo = async () => {
 		send.status = true
 		setSend({status: true})
-		
+		Keyboard.dismiss()
 		if (mail === '' || pass === '') {
 			onToggleSnackBar('Faltan completar campos.')
 			send.status = false
@@ -83,9 +83,12 @@ import { Snackbar } from 'react-native-paper';
 						placeholder="escribe tu contraseña"
 						placeholderTextColor="#9e9e9e"  
 						/>
-				<View style={send.status ? {backgroundColor: "gray"} : styles.btnPrimary}>
-					<Text onPress={sendInfo}>Ingresar</Text>
+				<View style={send.status ? styles.btnthird : styles.btnPrimary}>
+				{send.status 
+				?<Image source={require('../assets/loader.gif')} style={{width: 13, height: 13}}/> 
+				:<Text onPress={sendInfo}>Ingresar</Text>}
 				</View>
+				<Image source={require('../assets/loader.gif')} style={{display:"none"}}/> 
 				<View style={styles.btnSecondary}>
 					<Text style={{color: '#fff'}} onPress={() => props.navigation.navigate('Registrarse')}>Crear cuenta</Text>
 				</View>
@@ -155,6 +158,13 @@ const styles = StyleSheet.create({
 	},
 	btnPrimary: {
 		backgroundColor: '#D1B653',
+		padding: 10,
+		minWidth: 105,
+		alignItems: "center",
+		marginBottom: 10
+	},
+	btnthird:{
+		backgroundColor: 'grey',
 		padding: 10,
 		minWidth: 105,
 		alignItems: "center",
