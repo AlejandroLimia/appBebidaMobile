@@ -91,8 +91,8 @@ const Checkout = (props) => {
 
             </TouchableWithoutFeedback>
             <View style={styles.botones} >
-                <Text style={styles.botonIr} onPress={() => props.navigation.navigate('Cart')} >volver</Text>
-                <Text style={styles.botonVaciar}>pagar</Text>
+                <Text style={styles.botonIr} onPress={() => props.navigation.navigate('Cart')} >Volver</Text>
+                <Text style={styles.botonVaciar} onPress={() => props.navigation.navigate('Success')}>Pagar</Text>
             </View>
 
           </View>

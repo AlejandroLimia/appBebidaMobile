@@ -103,18 +103,14 @@ export const userActions = {
 			}
 		}
     },
-    actCart: (id, cantidad) => {
+	clearCart: () => {
 		return async (dispatch, getState) => {
-			let cart = getCartItems()
-				cart.map(item => {
-					if (item._id === id) {
-						item.quantity = cantidad;
-					}
-				})
-				dispatch({
-					type: 'LOAD_CART',
-					payload: cart
-				})
+			let cart = []
+			AsyncStorage.removeItem("items")
+			dispatch({
+				type: 'LOAD_CART',
+				payload: cart
+			})
 		}
 	},
 	loadCart: () => {

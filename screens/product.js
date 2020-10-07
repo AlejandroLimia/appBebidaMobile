@@ -103,10 +103,11 @@ import { connect } from 'react-redux';
 					<FontAwesome name="star-half-empty" size={24} color="#D1B653" />
 					<FontAwesome name="star-o" size={24} color="#D1B653" />
 				</View>
-				<Text style={styles.units}>{product.stock < 5 
+				<Text style={styles.units}>{product.stock === 0 ? "Sin stock" : product.stock < 5 
                     ? "Ultimas unidades"
                     : ""} </Text>
 				<Text style={styles.price}>$ {product.price}</Text>
+				{product.stock !== 0 && (
 				<View style={styles.quantities}>
 					<View style={styles.sum}>
 						<Text  onPress={restar} style={styles.plus}> -</Text>
@@ -117,7 +118,7 @@ import { connect } from 'react-redux';
 						<Text  style={styles.addToBagText} onPress={() => {addHandler()}}>Añadir al carrito</Text>
 						<FontAwesome name="cart-plus" size={40}  />
 					</View >
-				</View>
+				</View>)}
 				<View style={styles.description}>
 					<Text style={styles.descrip}>{product.description}</Text>
 				</View>
