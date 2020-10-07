@@ -44,7 +44,6 @@ export const userActions = {
 
 			if (!response.data.success) {
 				set({ status: false })
-				alert(response.data.error)
 				return response.data.error
 			} else {
 				set({ status: false })

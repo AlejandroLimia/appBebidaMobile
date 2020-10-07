@@ -5,11 +5,26 @@ import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-googl
 import Footer from '../shared/footer';
 import { connect } from 'react-redux';
 import { userActions } from '../redux/actions/userActions';
+import { Snackbar } from 'react-native-paper';
 
 
  function LogIn( props ) {
 	const image = require('../assets/background2.jpg');
 	
+	const [visible, setVisible] = useState(false);
+
+	const onToggleSnackBar = (text) => {
+		setVisible(!visible);
+		setSnack(text)
+	}
+  
+	const onDismissSnackBar = () => {
+		setVisible(false)
+		setSnack('')
+	};
+
+	const [snacktext, setSnack] = useState('')
+
 	const [send, setSend] = useState({
 		status: false
 	})
@@ -19,15 +34,20 @@ import { userActions } from '../redux/actions/userActions';
 	const sendInfo = async () => {
 		send.status = true
 		setSend({status: true})
+		
 		if (mail === '' || pass === '') {
-			alert("Campos obligatorios")
+			onToggleSnackBar('Faltan completar campos.')
 			send.status = false
 			setSend({status: false})
 		}
 		else {
 			const test = await props.loginUser({mail, pass}, setSend)
 			if(test === undefined) {
+				onToggleSnackBar('Buenas!')
 				props.navigation.navigate("Home")
+			} 
+			else {
+				onToggleSnackBar('Mail o contraseña incorrectos')
 			}
 		}
 	}
@@ -76,6 +96,13 @@ import { userActions } from '../redux/actions/userActions';
 		<View>
 		 <Footer nav={props.navigation}/>
 		</View>
+		<Snackbar
+			visible={visible}
+			onDismiss={onDismissSnackBar}
+			style={{backgroundColor: 'firebrick'}}
+			>
+			<Text style={{color: 'white', fontWeight: 'bold'}}>{snacktext}</Text>
+      	</Snackbar>
         </>
 		)
 	}
