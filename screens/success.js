@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image} from 'react-native';
 import { AppLoading } from 'expo';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import { connect } from 'react-redux';
-import { userActions } from '../redux/actions/userActions';
+import { orderActions } from '../redux/actions/orderActions';
 import Footer from '../shared/footer';
 import Header from '../shared/header';
 import { RUTA_API } from '../shared/constants';
@@ -17,6 +17,14 @@ const Success = (props) => {
       
       setTimeout(() => {
         setLoading(false)
+        const order = {
+            userId: props.user.id,
+            shippingAddress: props.orderShippingInfo,
+            billingAddress: props.orderBillingInfo,
+            items: props.user.cart,
+            payment: 'Tarjeta de credito'
+        }
+        createOr(order)
     }, 4000);
 	  
   
@@ -117,12 +125,13 @@ const Success = (props) => {
 
     const mapStateToProps = state => {
         return {
-            cart: state.userReducer.cart
+            orderShippingInfo: state.userReducer.orderShippingInfo,
+		    orderBillingInfo: state.userReducer.orderBillingInfo,
+		    user: state.userReducer
         }
     }
     const mapDispatchToProps = {
-        removeFromCart: userActions.removeFromCart,
-        actCart: userActions.actCart
+        createOrder: orderActions.createOrder
     }
     
     export default connect(mapStateToProps, mapDispatchToProps)(Success)

@@ -22,14 +22,115 @@ const Checkout = (props) => {
 		  name: "Tester Tee",
 		  flip: false,
 	  })
+	  const [error, setError] = useState({
+		cvc: '',
+		expiry: '',
+		focus: '',
+		name: '',
+		number: '',
+	})
+	const [send, setSend] = useState({
+		status: false
+	})
+	const [alerta, setAlerta] = useState({
+		errorCvc: "",
+		errorExpiry: "",
+		errorFocus: "",
+		errorName: "",
+		errorNumber: "",
+	})
+	
+	const actualizarHandler = async ()=> {
+		send.status = true
+		setSend({ status: true })
+	
+		if (validation(card)) {
+			alert("¡Compra realizada! Felicitaciones")
+			props.navigation.navigate('/Success')
+			
+		}else{
+			alert("¡Porfavor completar los campos obligatorios!")
+			send.status = false
+			setSend({ status: false })
+			setError({
+				...error,
+				ok: false
+			})
+			setAlerta({
+				errorCvc: error.Cvc,
+				errorExpiry: error.expiry,
+				errorName: error.name,
+				errorNumber: error.number,
+			})
+		}
+	}
 
-	  const inputHandler = (value, field) => {
-		  setCard({
-			  ...card,
-			  [field]: value
-		  })
-	  }
+
 	  
+	  const handleInputFocus = (e) => {
+		setCard({...card, focus: e.target.name });
+	}
+	  const validation = card => {
+		error.ok = true
+			// RegEx
+			const alphanum = RegExp(/^\w+$/)
+			const num = RegExp(/\d./)
+			const decimals = RegExp(/^([0-9]+(\.?[0-9]?[0-9]?)?)/)							
+		  
+			// cvc
+		  if (card.cvc === '') {
+			  error.Cvc = 'El numero de la tarjeta no puede estar vacio'
+			  error.ok = false
+		  }
+		  else if (!num.test(card.cvc)) {
+			  error.Cvc = 'Solo puede contener números'
+			  error.ok = false
+		  }
+		  else error.Cvc = ''
+			  
+		  
+			//  
+			if (card.expiry === '') {
+				error.expiry = 'La fecha de vencimiento no puede estar vacia'
+				error.ok = false
+			}
+		  
+			else if (!num.test(card.expiry)) {
+				error.expiry = 'Solo puede contener numeros '
+				error.ok = false
+			}
+		  
+		  else error.expiry = ''
+		  
+			// name
+			if (card.name === '') {
+				error.name = 'El nombre no puede estar vacío'
+				error.ok = false
+			}
+			else error.name = ''
+		  
+		  
+			// number
+			if (card.number === '') {
+				error.number = 'El numero de la tarjeta no puede estar vacio'
+				error.ok = false
+			}
+			else if (!num.test(card.number)) {
+				error.number = 'Solo puede contener números'
+			  error.ok = false
+		  }
+		  else error.number = ''
+	  
+		  //Return
+			return error.ok
+	  }
+  
+	  const inputHandler = (value, field) => {
+		setCard({
+			...card,
+			[field]: value
+		})
+	}
   
 	  if (!fontsLoaded) {
 		  return <AppLoading />;
@@ -64,13 +165,17 @@ const Checkout = (props) => {
 					onFocus={() => inputHandler(false, 'flip')} 
 					keyboardType= 'number-pad'
 					maxLength= {16}
-					onChangeText={(val) => inputHandler(parseInt(val), 'number')} />
+					onChangeText={(val) => inputHandler(parseInt(val), 'number')} 
+					onFocus= {handleInputFocus}/>
+					<Text style={{ color: "red" }}>{alerta.errorNumber}</Text>
 					<TextInput 
 					style={styles.inputs}
 					placeholder="Nombre. Ej: Juan Perez"
 					placeholderTextColor="#999999"
 					onFocus={() => inputHandler(false, 'flip')} 
-					onChangeText={(val) => inputHandler(val, 'name')} />
+					onChangeText={(val) => inputHandler(val, 'name')}
+					onFocus= {handleInputFocus} />
+					<Text style={{ color: "red" }}>{alerta.errorName}</Text>
 					<TextInput 
 					style={styles.inputs}
 					placeholder="Fecha de expiracion. MM/AA"
@@ -78,7 +183,9 @@ const Checkout = (props) => {
 					onFocus={() => inputHandler(false, 'flip')}
 					keyboardType= 'number-pad'
 					maxLength= {4}
-					onChangeText={(val) => inputHandler(val, 'expiry')} />
+					onChangeText={(val) => inputHandler(val, 'expiry')}
+					onFocus= {handleInputFocus} />
+					<Text style={{ color: "red" }}>{alerta.errorExpiry}</Text>
 					<TextInput 
 					style={styles.inputs}
 					placeholder="Codigo de seguridad"
@@ -86,13 +193,15 @@ const Checkout = (props) => {
 					onFocus={() => inputHandler(true, 'flip')}
 					keyboardType= 'number-pad'
 					maxLength= {4}
-					onChangeText={(val) => inputHandler(val, 'cvc')} />
+					onChangeText={(val) => inputHandler(val, 'cvc')} 
+					onFocus= {handleInputFocus}/>
+					<Text style={{ color: "red" }}>{alerta.errorCvc}</Text>
 				</View>
 
             </TouchableWithoutFeedback>
             <View style={styles.botones} >
                 <Text style={styles.botonIr} onPress={() => props.navigation.navigate('Cart')} >Volver</Text>
-                <Text style={styles.botonVaciar} onPress={() => props.navigation.navigate('Success')}>Pagar</Text>
+                <Text style={styles.botonVaciar} onPress={() => {actualizarHandler}}>Pagar</Text>
             </View>
 
           </View>
@@ -120,7 +229,7 @@ const Checkout = (props) => {
 		},	
 		inputs:{
 			margin: 10,
-			height: 40, 
+			height: 20, 
 			borderBottomColor: '#D1B653', 
 			borderBottomWidth: 2, 
 			color: "#fff", 
@@ -172,8 +281,6 @@ const Checkout = (props) => {
         }
     }
     const mapDispatchToProps = {
-        removeFromCart: userActions.removeFromCart,
-        actCart: userActions.actCart
     }
     
     export default connect(mapStateToProps, mapDispatchToProps)(Checkout)

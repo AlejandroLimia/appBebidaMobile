@@ -79,6 +79,68 @@ import { connect } from 'react-redux';
 			quantity: 1
 		})
 	}
+	const stars = (rating) => {
+		let total = 0
+		rating.map(rate => total += parseInt(rate))
+		const prom = total / rating.length
+		switch (Math.round(prom)) {
+			case 1:
+				return (<>
+				        <FontAwesome  name="star" size={24} color="#D1B653" />
+                        <FontAwesome name="star-o" size={24} color="#D1B653" />
+                        <FontAwesome name="star-o" size={24} color="#D1B653" />
+                        <FontAwesome name="star-o" size={24} color="#D1B653" />
+                        <FontAwesome name="star-o" size={24} color="#D1B653" />
+				</>)
+				break;
+			case 2:
+				return (<>
+				       <FontAwesome  name="star" size={24} color="#D1B653" />
+					   <FontAwesome  name="star" size={24} color="#D1B653" />
+                       <FontAwesome name="star-o" size={24} color="#D1B653" />
+                       <FontAwesome name="star-o" size={24} color="#D1B653" />
+                       <FontAwesome name="star-o" size={24} color="#D1B653" />
+				</>)
+				break;
+			case 3:
+				return (<>
+				       <FontAwesome  name="star" size={24} color="#D1B653" />
+					   <FontAwesome  name="star" size={24} color="#D1B653" />
+                       <FontAwesome  name="star" size={24} color="#D1B653" />
+                       <FontAwesome name="star-o" size={24} color="#D1B653" />
+                       <FontAwesome name="star-o" size={24} color="#D1B653" />
+				</>)
+				break;
+			case 4:
+				return (<>
+				        <FontAwesome  name="star" size={24} color="#D1B653" />
+					   <FontAwesome  name="star" size={24} color="#D1B653" />
+                       <FontAwesome  name="star" size={24} color="#D1B653" />
+					   <FontAwesome  name="star" size={24} color="#D1B653" />
+                       <FontAwesome name="star-o" size={24} color="#D1B653" />
+				</>)
+				break;
+			case 5:
+				return (<>
+				        <FontAwesome  name="star" size={24} color="#D1B653" />
+					   <FontAwesome  name="star" size={24} color="#D1B653" />
+                       <FontAwesome  name="star" size={24} color="#D1B653" />
+					   <FontAwesome  name="star" size={24} color="#D1B653" />
+					   <FontAwesome  name="star" size={24} color="#D1B653" />
+				</>)
+				break;
+		
+			default:
+				return (<>
+						<FontAwesome name="star-o" size={24} color="#D1B653" />		
+                        <FontAwesome name="star-o" size={24} color="#D1B653" />
+                        <FontAwesome name="star-o" size={24} color="#D1B653" />
+                        <FontAwesome name="star-o" size={24} color="#D1B653" />
+                        <FontAwesome name="star-o" size={24} color="#D1B653" />
+			</>)
+				break;
+		}
+	}
     if (!fontsLoaded) {
 		return <AppLoading />;
 	} 
@@ -97,11 +159,8 @@ import { connect } from 'react-redux';
 				<Image style={styles.TheImage} source={{uri:`${RUTA_API}/${props.route.params.id}.jpg`}}></Image>
 				<Text style={styles.titleProduct}>{product.title}</Text>
 				<View  style={styles.ratings}>
-					<FontAwesome  name="star" size={24} color="#D1B653" />
-					<FontAwesome  name="star" size={24} color="#D1B653" />
-					<FontAwesome  name="star" size={24} color="#D1B653" />
-					<FontAwesome name="star-half-empty" size={24} color="#D1B653" />
-					<FontAwesome name="star-o" size={24} color="#D1B653" />
+				<Text style={styles.stars}>{product.rating && stars(product.rating)}
+						{product.rating && (product.rating.length === 0 ? "  N/A" : `  (${product.rating.length})`)}</Text>
 				</View>
 				<Text style={styles.units}>{product.stock === 0 ? "Sin stock" : product.stock < 5 
                     ? "Ultimas unidades"
@@ -212,7 +271,12 @@ const styles = StyleSheet.create({
 		fontStyle: "italic",
 		marginTop: 10,
 		fontSize:15,
-	},	
+	},
+	stars:{
+		color: "#D1B653",
+		fontWeight: "bold",
+		fontSize: 15,
+	},
 	price:{
 		fontWeight: "bold",
 		marginTop: 10,

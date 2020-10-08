@@ -6,6 +6,7 @@ import Footer from '../shared/footer';
 import { connect } from 'react-redux';
 import { userActions } from '../redux/actions/userActions';
 import { Snackbar } from 'react-native-paper';
+import { RUTA_API } from '../shared/constants';
 
 
  function LogIn( props ) {
@@ -85,7 +86,7 @@ import { Snackbar } from 'react-native-paper';
 						/>
 				<View style={send.status ? styles.btnthird : styles.btnPrimary}>
 				{send.status 
-				?<Image source={require('../assets/loader.gif')} style={{width: 13, height: 13}}/> 
+				?<Image source={{uri:`${RUTA_API}/loader.gif`}} style={{width: 13, height: 13}}/> 
 				:<Text onPress={sendInfo}>Ingresar</Text>}
 				</View>
 				<Image source={require('../assets/loader.gif')} style={{display:"none"}}/> 
