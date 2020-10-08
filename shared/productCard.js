@@ -1,22 +1,24 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Image, StyleSheet, Text, View,TouchableHighlight } from 'react-native';
 import { AppLoading } from 'expo';
 import { FontAwesome } from '@expo/vector-icons';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import { userActions } from '../redux/actions/userActions';
 import { connect } from 'react-redux';
+import { Snackbar } from 'react-native-paper';
 
 const ProductCard = (props) => {
 	let [fontsLoaded] = useFonts({
 		Montserrat_400Regular,
 		Montserrat_700Bold,
 	  });
+
 	  if (!fontsLoaded) {
 		  return <AppLoading />;
 	  } 
 	  else {
-		  return (
+		  return (<>
 		  <View style={styles.card}>
 			  <View style={styles.cardImg} onPress={() => props.navigation.navigate('Product', {id: props.data._id} )}>
 				  <Image style={styles.img} source={{uri: `${props.ngrok}/${props.data._id}.jpg`}} />
@@ -26,13 +28,13 @@ const ProductCard = (props) => {
 				  <View style={styles.cardTextCart}>
 					  <Text style={{...styles.cardText, fontSize: 15, fontWeight: 'bold' }} onPress={() => props.navigation.navigate('Product', {id: props.data._id})}>${props.data.price}</Text>
 					  {props.data.stock !== 0 
-					  ?<FontAwesome name="cart-plus" size={40} color="#D1B653" onPress={() => props.addToCart(props.data._id, 1, alert("se agrego al carrito"))} />
-					  :<FontAwesome name="cart-plus" size={40} color="#6b6b6b" onPress={() => (alert("No hay stock disponible"))} />
+					  ?<FontAwesome name="cart-plus" size={40} color="#D1B653" onPress={() => {props.addToCart(props.data._id, 1); props.onToggleSnackBar('Articulo agregado', 'success')}} />
+					  :<FontAwesome name="cart-plus" size={40} color="#6b6b6b" onPress={() => props.onToggleSnackBar('No hay stock', 'error')} />
 					  }
 				  </View>
 			  </View>
 		  </View>
-		  )
+		  </>)
 	  }
   }
  
