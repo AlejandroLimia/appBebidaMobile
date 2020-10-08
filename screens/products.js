@@ -36,7 +36,7 @@ export default function Products({navigation, route}) {
 		.then(response => response.json())
 		.then(json => setInfo(json.listProducts))
 		.catch(err => console.log('falle al comunicarme'))
-	}, [])
+	}, [route.params.url])
 
     if (!fontsLoaded) {
 		return <AppLoading />;
