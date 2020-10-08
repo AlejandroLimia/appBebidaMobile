@@ -139,6 +139,36 @@ export const userActions = {
 			})
 		}
 	},
+	authUser: token => {
+		return async (dispatch, getState) => {
+			let response
+			try {
+				response = await axios.get(RUTA_API + "/api/user/login", {
+					headers: {
+						Authorization: "Bearer " + token,
+					},
+				})
+
+			} catch {
+				return false
+			}
+			const { lastName, firstName, wishlist, id, billingAddress, shippingAddress, rates, role } = response.data
+			dispatch({
+				type: "USER_IN",
+				payload: {
+					token,
+					id,
+					firstName,
+					lastName,
+					wishlist,
+					billingAddress,
+					shippingAddress,
+					rates,
+					role
+				},
+			})
+		}
+	},
 
 
 

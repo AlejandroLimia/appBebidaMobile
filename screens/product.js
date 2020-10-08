@@ -11,6 +11,7 @@ import { RUTA_API } from '../shared/constants';
 import { FlingGestureHandler } from 'react-native-gesture-handler';
 import { userActions } from '../redux/actions/userActions';
 import { connect } from 'react-redux';
+import { Snackbar } from 'react-native-paper';
 
  function Product(props) {
 	const vino = require('../assets/botella.png')
@@ -56,6 +57,21 @@ import { connect } from 'react-redux';
 		}
 		rg()
 	}, [])
+
+	const [visible, setVisible] = useState(false);
+
+	const onToggleSnackBar = (text) => {
+		setVisible(!visible);
+		setSnack(text)
+	}
+  
+	const onDismissSnackBar = () => {
+		setVisible(false)
+		setSnack('')
+	};
+
+	const [snacktext, setSnack] = useState('')
+
 	const restar = () => {
         if (quantity.quantity > 1){
             setquantity({
@@ -74,7 +90,7 @@ import { connect } from 'react-redux';
 	const addHandler = () =>{
 		props.addToCart(product.id, quantity.quantity);
 		product.stock = product.stock - quantity.quantity;
-		alert("se agrego al carrito")
+		onToggleSnackBar('Articulo agregado')
 		setquantity({
 			quantity: 1
 		})
@@ -129,6 +145,13 @@ import { connect } from 'react-redux';
 			</View>	
 		</ScrollView>
 		</View>
+		<Snackbar
+			visible={visible}
+			onDismiss={onDismissSnackBar}
+			style={{backgroundColor: 'green'}}
+			>
+			<Text style={{color: 'white', fontWeight: 'bold'}}>{snacktext}</Text>
+      	</Snackbar>
 		<Footer nav={props.navigation} />
 		</>)
 	}

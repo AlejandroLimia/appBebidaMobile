@@ -5,15 +5,8 @@ import {
 	DrawerItem
 } from '@react-navigation/drawer'
 import {
-    useTheme,
-    Avatar,
-    Title,
-    Caption,
-    Paragraph,
     Drawer,
     Text,
-    TouchableRipple,
-    Switch
 } from 'react-native-paper';
 import { FontAwesome, Entypo, FontAwesome5 } from '@expo/vector-icons';
 import { connect } from 'react-redux';

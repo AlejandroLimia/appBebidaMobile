@@ -6,6 +6,7 @@ import ProductCard from '../shared/productCard';
 import Header from '../shared/header';
 import Footer from '../shared/footer';
 import { RUTA_API } from '../shared/constants';
+import { Snackbar } from 'react-native-paper';
 
 export default function Products({navigation, route}) {
 	let [fontsLoaded] = useFonts({
@@ -13,6 +14,22 @@ export default function Products({navigation, route}) {
 	  Montserrat_700Bold,
 	});
 	const [info, setInfo] = useState([])
+
+	const [visible, setVisible] = useState(false);
+
+	const onToggleSnackBar = (text, style) => {
+		setVisible(!visible);
+		setSnack(text)
+		setStyle(style)
+	}
+  
+	const onDismissSnackBar = () => {
+		setVisible(false)
+		setSnack('')
+	};
+
+	const [snacktext, setSnack] = useState('')
+	const [snackStyle, setStyle] = useState('')
 
 	useEffect(() => {
 		fetch(`${RUTA_API}/api/products/${route.params.url}`)
@@ -37,13 +54,20 @@ export default function Products({navigation, route}) {
 					style={{width: '90%'}}
 					data={info}
 					renderItem={({item}) => { 
-						return <ProductCard data={item} ngrok={RUTA_API} navigation={navigation}  />
+						return <ProductCard data={item} ngrok={RUTA_API} navigation={navigation} onToggleSnackBar={onToggleSnackBar}  />
 					}}
 				/>
 				<StatusBar style="light-content" />
 			</View>
 		</ScrollView>
 		</View>
+		<Snackbar
+			visible={visible}
+			onDismiss={onDismissSnackBar}
+			style={snackStyle === 'error' ? styles.bgError : styles.bgSuccess}
+			>
+			<Text style={{color: 'white', fontWeight: 'bold'}}>{snacktext}</Text>
+      	</Snackbar>
 		<Footer nav={navigation} />
 		</>)
 	}
@@ -71,5 +95,11 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 1,
 		alignItems: "center",
 		justifyContent: "center"
+	},
+	bgSuccess: {
+		backgroundColor: 'green'
+	},
+	bgError: {
+		backgroundColor: 'firebrick'
 	},
 })
