@@ -7,6 +7,7 @@ import { userActions } from '../redux/actions/userActions';
 import Footer from '../shared/footer';
 import Header from '../shared/header';
 import CreditCardDisplay from "react-native-credit-card-display";
+import { Snackbar } from 'react-native-paper';
 
 const Checkout = (props) => {
     let [fontsLoaded] = useFonts({
@@ -32,21 +33,14 @@ const Checkout = (props) => {
 	const [send, setSend] = useState({
 		status: false
 	})
-	const [alerta, setAlerta] = useState({
-		errorCvc: "",
-		errorExpiry: "",
-		errorFocus: "",
-		errorName: "",
-		errorNumber: "",
-	})
+	
 	
 	const actualizarHandler = async ()=> {
 		send.status = true
 		setSend({ status: true })
 	
 		if (validation(card)) {
-			alert("¡Compra realizada! Felicitaciones")
-			props.navigation.navigate('/Success')
+			props.navigation.navigate('Success')
 			
 		}else{
 			alert("¡Porfavor completar los campos obligatorios!")
@@ -56,20 +50,12 @@ const Checkout = (props) => {
 				...error,
 				ok: false
 			})
-			setAlerta({
-				errorCvc: error.Cvc,
-				errorExpiry: error.expiry,
-				errorName: error.name,
-				errorNumber: error.number,
-			})
 		}
 	}
 
 
 	  
-	  const handleInputFocus = (e) => {
-		setCard({...card, focus: e.target.name });
-	}
+	
 	  const validation = card => {
 		error.ok = true
 			// RegEx
@@ -79,14 +65,14 @@ const Checkout = (props) => {
 		  
 			// cvc
 		  if (card.cvc === '') {
-			  error.Cvc = 'El numero de la tarjeta no puede estar vacio'
+			  error.cvc = 'El numero de la tarjeta no puede estar vacio'
 			  error.ok = false
 		  }
 		  else if (!num.test(card.cvc)) {
-			  error.Cvc = 'Solo puede contener números'
+			  error.cvc = 'Solo puede contener números'
 			  error.ok = false
 		  }
-		  else error.Cvc = ''
+		  else error.cvc = ''
 			  
 		  
 			//  
@@ -117,7 +103,7 @@ const Checkout = (props) => {
 			}
 			else if (!num.test(card.number)) {
 				error.number = 'Solo puede contener números'
-			  error.ok = false
+			    error.ok = false
 		  }
 		  else error.number = ''
 	  
@@ -166,16 +152,16 @@ const Checkout = (props) => {
 					keyboardType= 'number-pad'
 					maxLength= {16}
 					onChangeText={(val) => inputHandler(parseInt(val), 'number')} 
-					onFocus= {handleInputFocus}/>
-					<Text style={{ color: "red" }}>{alerta.errorNumber}</Text>
+					/>
+					<Text style={{ color: "red" }}>{error.number}</Text>
 					<TextInput 
 					style={styles.inputs}
 					placeholder="Nombre. Ej: Juan Perez"
 					placeholderTextColor="#999999"
 					onFocus={() => inputHandler(false, 'flip')} 
 					onChangeText={(val) => inputHandler(val, 'name')}
-					onFocus= {handleInputFocus} />
-					<Text style={{ color: "red" }}>{alerta.errorName}</Text>
+					 />
+					<Text style={{ color: "red" }}>{error.name}</Text>
 					<TextInput 
 					style={styles.inputs}
 					placeholder="Fecha de expiracion. MM/AA"
@@ -184,8 +170,8 @@ const Checkout = (props) => {
 					keyboardType= 'number-pad'
 					maxLength= {4}
 					onChangeText={(val) => inputHandler(val, 'expiry')}
-					onFocus= {handleInputFocus} />
-					<Text style={{ color: "red" }}>{alerta.errorExpiry}</Text>
+					/>
+					<Text style={{ color: "red" }}>{error.expiry}</Text>
 					<TextInput 
 					style={styles.inputs}
 					placeholder="Codigo de seguridad"
@@ -194,18 +180,25 @@ const Checkout = (props) => {
 					keyboardType= 'number-pad'
 					maxLength= {4}
 					onChangeText={(val) => inputHandler(val, 'cvc')} 
-					onFocus= {handleInputFocus}/>
-					<Text style={{ color: "red" }}>{alerta.errorCvc}</Text>
+					/>
+					<Text style={{ color: "red" }}>{error.cvc}</Text>
 				</View>
 
             </TouchableWithoutFeedback>
             <View style={styles.botones} >
                 <Text style={styles.botonIr} onPress={() => props.navigation.navigate('Cart')} >Volver</Text>
-                <Text style={styles.botonVaciar} onPress={() => {actualizarHandler}}>Pagar</Text>
+                <Text style={styles.botonVaciar} onPress={actualizarHandler}>Pagar</Text>
             </View>
 
           </View>
           <Footer nav={props.navigation} />
+		 {/* <Snackbar
+			visible={visible}
+			onDismiss={onDismissSnackBar}
+			style={snackStyle === 'error' ? styles.bgError : styles.bgSuccess}
+			>
+			<Text style={{color: 'white', fontWeight: 'bold'}}>{snacktext}</Text>
+		 </Snackbar>*/}
           </>)
       }
     }

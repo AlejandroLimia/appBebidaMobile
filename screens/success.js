@@ -17,14 +17,14 @@ const Success = (props) => {
       
       setTimeout(() => {
         setLoading(false)
-        const order = {
+        {/*const order = {
             userId: props.user.id,
             shippingAddress: props.orderShippingInfo,
             billingAddress: props.orderBillingInfo,
             items: props.user.cart,
             payment: 'Tarjeta de credito'
         }
-        createOr(order)
+        props.createOrder(order)*/}
     }, 4000);
 	  
   

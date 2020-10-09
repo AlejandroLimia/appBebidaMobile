@@ -204,6 +204,7 @@ import { Snackbar } from 'react-native-paper';
 			</View>	
 		</ScrollView>
 		</View>
+		<Footer nav={props.navigation} />
 		<Snackbar
 			visible={visible}
 			onDismiss={onDismissSnackBar}
@@ -211,7 +212,6 @@ import { Snackbar } from 'react-native-paper';
 			>
 			<Text style={{color: 'white', fontWeight: 'bold'}}>{snacktext}</Text>
       	</Snackbar>
-		<Footer nav={props.navigation} />
 		</>)
 	}
 }

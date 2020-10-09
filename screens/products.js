@@ -36,7 +36,7 @@ export default function Products({navigation, route}) {
 		.then(response => response.json())
 		.then(json => setInfo(json.listProducts))
 		.catch(err => console.log('falle al comunicarme'))
-	}, [])
+	}, [route.params.url])
 
     if (!fontsLoaded) {
 		return <AppLoading />;
@@ -61,6 +61,8 @@ export default function Products({navigation, route}) {
 			</View>
 		</ScrollView>
 		</View>
+		<Footer nav={navigation} />
+
 		<Snackbar
 			visible={visible}
 			onDismiss={onDismissSnackBar}
@@ -68,7 +70,6 @@ export default function Products({navigation, route}) {
 			>
 			<Text style={{color: 'white', fontWeight: 'bold'}}>{snacktext}</Text>
       	</Snackbar>
-		<Footer nav={navigation} />
 		</>)
 	}
 }
