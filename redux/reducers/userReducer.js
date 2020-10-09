@@ -16,7 +16,6 @@ export default userReducer =(state = initialState, action) => {
     switch (action.type) {
 		case "USER_IN":
 			const setToken = async () => {
-				console.log(`Guardando token`)
 				await AsyncStorage.setItem("token", action.payload.token)
 			}
 			setToken()

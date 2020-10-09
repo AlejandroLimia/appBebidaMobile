@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput,TouchableWithoutFeedback,Keyboard } from 'react-native';
+import { StyleSheet, Text, View, TextInput,TouchableWithoutFeedback,Keyboard, ScrollView } from 'react-native';
 import { AppLoading } from 'expo';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import { connect } from 'react-redux';
@@ -15,12 +15,25 @@ const Checkout = (props) => {
 		Montserrat_700Bold,
 	  });
 
-	  const [card, setCard] = useState({
-		  expiry: "1222",
+	const [visible, setVisible] = useState(false);
+
+	const onToggleSnackBar = (text) => {
+	  setVisible(!visible);
+	  setSnack(text)
+	}
+	
+	const onDismissSnackBar = () => {
+	  setVisible(false)
+	  setSnack('')
+	};
+  
+	const [snacktext, setSnack] = useState('')
+
+	const [card, setCard] = useState({
+		  expiry: " ",
 		  cvc: 123,
-		  type: 'visa',
-		  number: 4134123412341234,
-		  name: "Tester Tee",
+		  number: {},
+		  name: " ",
 		  flip: false,
 	  })
 	  const [error, setError] = useState({
@@ -38,12 +51,12 @@ const Checkout = (props) => {
 	const actualizarHandler = async ()=> {
 		send.status = true
 		setSend({ status: true })
-	
+		Keyboard.dismiss()
 		if (validation(card)) {
 			props.navigation.navigate('Success')
 			
 		}else{
-			alert("¡Porfavor completar los campos obligatorios!")
+			onToggleSnackBar('Por favor revise los campos')
 			send.status = false
 			setSend({ status: false })
 			setError({
@@ -52,66 +65,68 @@ const Checkout = (props) => {
 			})
 		}
 	}
-
-
-	  
 	
-	  const validation = card => {
+	const validation = card => {
 		error.ok = true
-			// RegEx
-			const alphanum = RegExp(/^\w+$/)
-			const num = RegExp(/\d./)
-			const decimals = RegExp(/^([0-9]+(\.?[0-9]?[0-9]?)?)/)							
-		  
-			// cvc
-		  if (card.cvc === '') {
-			  error.cvc = 'El numero de la tarjeta no puede estar vacio'
-			  error.ok = false
-		  }
-		  else if (!num.test(card.cvc)) {
-			  error.cvc = 'Solo puede contener números'
-			  error.ok = false
-		  }
-		  else error.cvc = ''
+		// RegEx
+		const num = RegExp(/\d./)							
+
+		// cvc
+		if (card.cvc === 123 || card.cvc === '') {
+			error.cvc = 'El numero de seguridad no puede estar vacio'
+			error.ok = false
+		}
+		else if (!num.test(card.cvc)) {
+			error.cvc = 'Solo puede contener números'
+			error.ok = false
+		}
+		else error.cvc = ''
 			  
 		  
-			//  
-			if (card.expiry === '') {
-				error.expiry = 'La fecha de vencimiento no puede estar vacia'
-				error.ok = false
-			}
+		// expiry
+		if (card.expiry === ' ') {
+			error.expiry = 'La fecha de vencimiento no puede estar vacia'
+			error.ok = false
+		}
+
+		else if (!num.test(card.expiry)) {
+			error.expiry = 'Solo puede contener numeros '
+			error.ok = false
+		}
+
+		else error.expiry = ''
 		  
-			else if (!num.test(card.expiry)) {
-				error.expiry = 'Solo puede contener numeros '
-				error.ok = false
-			}
-		  
-		  else error.expiry = ''
-		  
-			// name
-			if (card.name === '') {
-				error.name = 'El nombre no puede estar vacío'
-				error.ok = false
-			}
-			else error.name = ''
+		// name
+		if (card.name === ' ' || card.name === '') {
+			error.name = 'El nombre no puede estar vacío'
+			error.ok = false
+		}
+		else error.name = ''
 		  
 		  
-			// number
-			if (card.number === '') {
-				error.number = 'El numero de la tarjeta no puede estar vacio'
-				error.ok = false
-			}
-			else if (!num.test(card.number)) {
-				error.number = 'Solo puede contener números'
-			    error.ok = false
-		  }
-		  else error.number = ''
+		// number
+		if (card.number === {} || isNaN(card.number) ) {
+			error.number = 'El numero de la tarjeta no puede estar vacio'
+			error.ok = false
+		}
+		else if (!num.test(card.number)) {
+			error.number = 'Solo puede contener números'
+			error.ok = false
+		}
+		else if (card.number.toString().length < 16) {
+			error.number = 'El número no está completo'
+			error.ok = false
+		}
+		else error.number = ''
 	  
-		  //Return
-			return error.ok
-	  }
+		//Return
+		return error.ok
+	}
   
 	  const inputHandler = (value, field) => {
+		if(field === 'expiry' && value === '') {
+			value = ' '
+		}
 		setCard({
 			...card,
 			[field]: value
@@ -142,7 +157,7 @@ const Checkout = (props) => {
 				/>
 			</View>
 			<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-
+				<ScrollView>
 				<View  style={styles.card}>
 					<TextInput 
 					style={styles.inputs}
@@ -183,7 +198,7 @@ const Checkout = (props) => {
 					/>
 					<Text style={{ color: "red" }}>{error.cvc}</Text>
 				</View>
-
+				</ScrollView>
             </TouchableWithoutFeedback>
             <View style={styles.botones} >
                 <Text style={styles.botonIr} onPress={() => props.navigation.navigate('Cart')} >Volver</Text>
@@ -192,13 +207,13 @@ const Checkout = (props) => {
 
           </View>
           <Footer nav={props.navigation} />
-		 {/* <Snackbar
+		  <Snackbar
 			visible={visible}
 			onDismiss={onDismissSnackBar}
-			style={snackStyle === 'error' ? styles.bgError : styles.bgSuccess}
+			style={{backgroundColor: 'firebrick'}}
 			>
-			<Text style={{color: 'white', fontWeight: 'bold'}}>{snacktext}</Text>
-		 </Snackbar>*/}
+		  <Text style={{color: 'white', fontWeight: 'bold'}}>{snacktext}</Text>
+		  </Snackbar>
           </>)
       }
     }

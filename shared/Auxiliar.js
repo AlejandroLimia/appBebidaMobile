@@ -28,7 +28,6 @@ const VerToken = (props) => {
 	// 	}
 	// 	getData();
 	// }, [])
-	console.log(props.user)
 	
     if (!fontsLoaded) {
 		return <AppLoading />;

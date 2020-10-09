@@ -40,7 +40,6 @@ import { Snackbar } from 'react-native-paper';
 		 const rg = async()=>{
 		 const response = await axios.get(`${RUTA_API}/api/product/getProduct/${props.route.params.id}`)
 		 const info = response.data.productFound
-		 console.log(info)
 		setProduct({
 			title: info.title,
 			pic:info.pic,
