@@ -273,8 +273,8 @@ const styles = StyleSheet.create({
 	},
 	TheImage:{
 		marginTop:20,
-		height: 180,
-		width:130,
+		height: 200,
+		width:60,
 	},	
 	titleProduct:{
 		fontSize: 23,

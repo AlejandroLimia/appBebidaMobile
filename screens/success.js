@@ -49,7 +49,7 @@ const Success = (props) => {
 			    <Image source={require('../assets/hola3.gif')} />
             </View>}
             <View style={styles.botones} >
-                <Text style={styles.botonIr} onPress={() => props.navigation.navigate('Products')} >Seguir comprando</Text>
+                <Text style={styles.botonIr} onPress={() => props.navigation.navigate('Products', {url: "all" })} >Seguir comprando</Text>
             </View>
           </View>
           <Footer nav={props.navigation} />

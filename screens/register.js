@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, ImageBackground, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, TextInput, TouchableWithoutFeedback, Keyboard, Image } from 'react-native';
 import { AppLoading } from 'expo';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import Footer from '../shared/footer';
@@ -171,14 +171,16 @@ function Register( props ) {
 						
 						<TextInput
 						style={styles.inputs}
-						// secureTextEntry= "true"
+						secureTextEntry= "true"
 						placeholder="Escribe tu contraseña aca"
 						placeholderTextColor="#ffffffa9"
 						onChangeText={(val)=> setPass(val)}
 						/> 
 						{mensajes.pass1 ? <Text style={styles.mensajeError}>*Tu contraseña debe contener al menos 5 caracteres</Text> : mensajes.pass2 ?  <Text style={styles.mensajeError}>*Tu contraseña debe contener al menos una letra mayuscula, una minuscula y un numero </Text> : <Text></Text>}
                 <View style={styles.btnPrimary}>
-					<Text onPress={sendInfo}>Crear cuenta</Text>
+				{send.status 
+				?<Image source={require('../assets/loader.gif')} style={{width: 13, height: 13}}/> 
+				:<Text onPress={sendInfo}>Crear cuenta</Text>}
 				</View>
 				<View style={styles.btnSecondary}>
 					<Text style={{color: '#fff'}} onPress={() => props.navigation.navigate('LogIn')}>Ya tengo cuenta</Text>

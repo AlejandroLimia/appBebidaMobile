@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { Button, Image, StyleSheet, Text, View,TouchableHighlight } from 'react-native';
+import { Button, Image, StyleSheet, Text, View,TouchableHighlight, ImageBackground } from 'react-native';
 import { AppLoading } from 'expo';
 import { FontAwesome } from '@expo/vector-icons';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
@@ -54,17 +54,17 @@ const styles = StyleSheet.create({
 		borderWidth: 2,
 		borderBottomColor: '#D1B653',
 		width: '100%',
-		height: 100,
+		height: 107,
 		flexDirection: 'row',
 		padding: 3,
 		marginBottom: 10
 	},
 	cardImg: {
-		width: '30%'
+		width: '25%'
 	},
 	img: {
-		width: 60,
-		height: 95
+		width: 40,
+		height: 100
 	},
 	cardText: {
 		width: "70%",

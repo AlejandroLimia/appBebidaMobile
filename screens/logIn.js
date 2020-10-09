@@ -78,18 +78,17 @@ import { Snackbar } from 'react-native-paper';
 						onChangeText={(val) => setMail(val)}
 						/>
 						<TextInput
-						//secureTextEntry= "true"
+						secureTextEntry= "true"
 						style={styles.inputs}
 						onChangeText={(val)=> setPass(val)}
 						placeholder="escribe tu contraseña"
 						placeholderTextColor="#9e9e9e"  
 						/>
-				<View style={send.status ? styles.btnthird : styles.btnPrimary}>
+				<View style={styles.btnPrimary}>
 				{send.status 
 				?<Image source={require('../assets/loader.gif')} style={{width: 13, height: 13}}/> 
 				:<Text onPress={sendInfo}>Ingresar</Text>}
-				</View>
-				<Image source={require('../assets/loader.gif')} style={{display:"none"}}/> 
+				</View> 
 				<View style={styles.btnSecondary}>
 					<Text style={{color: '#fff'}} onPress={() => props.navigation.navigate('Registrarse')}>Crear cuenta</Text>
 				</View>
@@ -159,13 +158,6 @@ const styles = StyleSheet.create({
 	},
 	btnPrimary: {
 		backgroundColor: '#D1B653',
-		padding: 10,
-		minWidth: 105,
-		alignItems: "center",
-		marginBottom: 10
-	},
-	btnthird:{
-		backgroundColor: 'grey',
 		padding: 10,
 		minWidth: 105,
 		alignItems: "center",

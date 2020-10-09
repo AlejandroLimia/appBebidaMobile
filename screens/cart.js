@@ -43,7 +43,7 @@ const Cart = (props) => {
 					<View style={styles.infoItem}>
 						<Image style={styles.TheImage} source={{uri:`${RUTA_API}/${item._id}.jpg`}}></Image>
 						<View>
-							<Text style={styles.bold}> {item.title} <Text style={styles.regularr}>{item.ml}ml / {item.alcPct}%</Text></Text>
+							<Text style={styles.bold}>{item.title}<Text style={styles.regularr}>{item.ml}ml / {item.alcPct}%</Text></Text>
 							<Text style={styles.regular}>{item.quantity} x ${item.price}</Text>
 						</View>
 					</View>
@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
 		paddingLeft: 4,
 		fontSize: 18,
 		marginTop: 5,
+		marginLeft: 6,
 	},
 	regularr: {
 		fontFamily: 'Montserrat_400Regular',
@@ -106,9 +107,11 @@ const styles = StyleSheet.create({
 		fontSize: 13,
 	},
 	bold: {
+		width:290,
 		fontFamily: 'Montserrat_700Bold',
 		color: "#fff",
 		fontSize: 18,
+		marginLeft: 9,
 		
 	},
 	noItems:{
@@ -141,8 +144,8 @@ const styles = StyleSheet.create({
 	},
 	TheImage:{
 		marginTop:20,
-		height: 100,
-		width:50,
+		height: 110,
+		width:40,
 	},
 	total:{
 		display:"flex",
