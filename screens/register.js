@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, ImageBackground, TextInput, TouchableWithoutFeedback, Keyboard, Image } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, TextInput, TouchableWithoutFeedback, Keyboard, Image, Alert } from 'react-native';
 import { AppLoading } from 'expo';
 import { useFonts, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 import Footer from '../shared/footer';
 import { connect } from 'react-redux';
 import { userActions } from '../redux/actions/userActions';
+import { Snackbar } from 'react-native-paper';
 
 
 
@@ -18,6 +19,18 @@ function Register( props ) {
 	const [send, setSend] = useState({
 		status: false
 	})
+	const [visible, setVisible] = useState(false);
+
+	const onToggleSnackBar = (text) => {
+		setVisible(!visible);
+		setSnack(text)
+	}
+  
+	const onDismissSnackBar = () => {
+		setVisible(false)
+		setSnack('')
+	};
+	const [snacktext, setSnack] = useState('')
 
     const [mensajes, setMensajes] = useState({
         firstName1: false,
@@ -47,7 +60,7 @@ function Register( props ) {
         mensajes.pass2 = false
 
         if (name === '' || surname === '' || mail === '' || pass === '') {
-            alert("Por favor complete todos los campos")
+            onToggleSnackBar('Faltan completar campos.')
 			send.status = false
 			setSend({status: false})
             // name validation
@@ -192,6 +205,13 @@ function Register( props ) {
 		<View>
 		 <Footer nav={props.navigation}/>
 		</View>
+		<Snackbar
+			visible={visible}
+			onDismiss={onDismissSnackBar}
+			style={{backgroundColor: 'firebrick'}}
+			>
+			<Text style={{color: 'white', fontWeight: 'bold'}}>{snacktext}</Text>
+      	</Snackbar>
         </>
 		)
 	}

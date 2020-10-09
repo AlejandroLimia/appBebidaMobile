@@ -1,6 +1,8 @@
 import AsyncStorage from "@react-native-community/async-storage";
 import axios from "axios"
 import { RUTA_API } from "../../shared/constants"
+import { Alert} from 'react-native';
+
 
 const getCartItems = async () => {
 	let items = (await AsyncStorage.getItem('items') === null) ? [] : JSON.parse(await AsyncStorage.getItem('items'));
@@ -19,7 +21,7 @@ export const userActions = {
 				if (errors.mail !== undefined) alert(errors.mail.message);
 				return;
 			}else {
-            alert(`Buenas ${response.data.firstName}`)
+				Alert.alert("Bienvenido", `Hola ${response.data.firstName}`)
 				dispatch({
 					type: "USER_IN",
 					payload: {
@@ -47,7 +49,7 @@ export const userActions = {
 				return response.data.error
 			} else {
 				set({ status: false })
-				alert(`Buenas ${response.data.firstName}!`)
+				Alert.alert("Bienvenido",`Hola ${response.data.firstName}!`)
 				dispatch({
 					type: "USER_IN",
 					payload: {
@@ -67,7 +69,7 @@ export const userActions = {
 	},
     logoutUser: () => {
 		return (dispatch, getState) => {
-			alert("Nos vemos mas tarde!")
+			Alert.alert("Adios","Nos vemos mas tarde!")
 			dispatch({
 				type: "LOGOUT_USER",
 			})
